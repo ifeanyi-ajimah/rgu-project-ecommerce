@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categroy;
 use Illuminate\Http\Request;
-
+use App\Services\CategoryService;
 class CategroyController extends Controller
 {
     /**

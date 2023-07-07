@@ -9,7 +9,26 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','description'];
+    protected $fillable = ['name','description','user_id','image','price','weight','amount_in_stock','is_available'];
 
-    
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function product_images()
+    {
+        return $this->hasMany('App\Models\ProductImage');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order');
+    }
+
+    public function order_references()
+    {
+        return $this->hasMany('App\Models\OrderReference');
+    }
+
 }

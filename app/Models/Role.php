@@ -11,5 +11,14 @@ class Role extends Model
 
     protected $fillable = ['name','description'];
 
+    public function user()
+    {
+        return $this->hasOne('App\Models\User');
+    }
+    
+    public function permissions()
+    {
+    	return $this->belongsToMany('App\Models\Permission');
+    }
     
 }

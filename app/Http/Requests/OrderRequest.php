@@ -13,7 +13,7 @@ class OrderRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'customer_detail' => 'nullable|string',
+            'order_items.*' => 'required|array',
+            'order_items.*.product_id' => 'required|numeric|exists:products,id',
+            'order_items.*.product_quantity' => 'required|numeric',
+            'order_items.*.item_unit_price' => 'required|numeric',
+            'payment_evidence' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

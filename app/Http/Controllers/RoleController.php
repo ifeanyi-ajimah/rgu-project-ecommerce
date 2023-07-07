@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class RoleController extends Controller
 {
@@ -14,7 +17,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::all();
+        $permissions = Permission::all();
+        return view('roles.index', compact('roles', 'permissions'));
     }
 
     /**
@@ -35,7 +40,20 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string|max:80|unique:roles',
+            'description' => 'nullable|string',
+            'permissions.*' => 'required',
+        ]);
+
+        $data = $request->except(['_token']);
+        $role = Role::create($data);
+        if($request->permissions){
+            $role->permissions()->attach($request->permissions);
+        }
+
+        // Alert::success('Success', 'Role Added Successfully');
+        return back();
     }
 
     /**
@@ -67,9 +85,18 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request,  $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string|max:80|unique:roles,name,'.$id,
+            'description' => 'nullable|string',
+        ]);
+        $role = Role::find($id);
+        $data = $request->except(['_token']);
+        $role->update($data);
+        $role->permissions()->sync($request->permissions);
+        Alert::success('Success', 'Role Updated');
+        return back(); 
     }
 
     /**

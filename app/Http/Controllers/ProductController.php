@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
-
+use RealRashid\SweetAlert\Facades\Alert;
+use App\Services\ProductService;
 class ProductController extends Controller
 {
+    private ProductService $productservice;
+
+    public function __construct()
+    {
+        $this->productservice = new ProductService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $data = $this->productservice->index();
+        
+        return view('product.index',compact('data'));
+
     }
 
     /**
@@ -33,9 +45,13 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $data = $this->productservice->store($validated);
+
+        Alert::success('Success', 'Product Uploaded Successfully');
+        return redirect('/product');
     }
 
     /**

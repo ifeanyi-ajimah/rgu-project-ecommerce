@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -29,21 +30,45 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    protected function authenticated(Request $request, $user)
+    public function showLoginForm()
     {
-        if ( $user->type != 'admin') {
-            $this->logout($request);
-
-            return redirect()->back()
-                ->withInput($request->only($this->username(), 'remember'))
-                ->withErrors([
-                    $this->username() => 'You have no business here.'
-                ]);
-        } else {
-            return redirect()->intended($this->redirectPath());
-        }
-
+        return view('auth.mylogin');
     }
+
+    
+    public function authenticate(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+ 
+        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password'], 'type' => 'admin'])) {
+            $request->session()->regenerate();
+ 
+            return redirect()->intended('home');
+        }
+ 
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
+    }
+
+    // protected function authenticated(Request $request, $user)
+    // {
+    //     if ( $user->type != 'admin') {
+    //         $this->logout($request);
+
+    //         return redirect()->back()
+    //             ->withInput($request->only($this->username(), 'remember'))
+    //             ->withErrors([
+    //                 $this->username() => 'You have no business here.'
+    //             ]);
+    //     } else {
+    //         return redirect()->intended($this->redirectPath());
+    //     }
+
+    // }
 
     /**
      * Create a new controller instance.

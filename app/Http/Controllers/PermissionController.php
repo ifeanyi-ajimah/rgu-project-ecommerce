@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PermissionController extends Controller
 {
@@ -14,7 +15,8 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
+        $permissions = Permission::all();
+        return view('permissions.index', compact('permissions'));
     }
 
     /**
@@ -35,7 +37,15 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string|max:80|unique:permissions',
+            'description' => 'nullable|string',
+        ]);
+
+        $data = $request->except(['_token']);
+        Permission::create($data);
+        Alert::success('Success', 'Permission Added Successfully');
+        return back();
     }
 
     /**
@@ -67,9 +77,17 @@ class PermissionController extends Controller
      * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Permission $permission)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string|max:80|unique:permissions,name,'.$id,
+            'description' => 'nullable|string',
+        ]);
+        $permission = Permission::find($id);
+        $data = $request->except(['_token']);
+        $permission->update($data);
+        Alert::success('Success', 'Permission Updated');
+        return back();
     }
 
     /**
@@ -80,6 +98,8 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        //
+        // $permission->delete();
+        // Alert::success('Success', 'Permission Deleted');
+        // return back();
     }
 }

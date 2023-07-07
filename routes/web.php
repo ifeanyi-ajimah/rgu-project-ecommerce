@@ -22,7 +22,7 @@ Route::get('/admin', function () {
     return view('auth.mylogin');
 })->middleware('guest');
 
-
+Route::view('/testhome','home');
 
 Auth::routes(['verfiy' => true]);
 // Auth::routes(['verfiy' => true]);
@@ -37,3 +37,4 @@ Route::group(['middleware'=>['auth','isCustomer','verified'] ],function () {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

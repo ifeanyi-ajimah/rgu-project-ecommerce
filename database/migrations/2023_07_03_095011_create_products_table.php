@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->integer('user_id');
             $table->string('image')->nullable();
-            $table->boolean('is_active')->default(true);
+            // $table->boolean('is_active')->default(true);
             $table->boolean('status')->default(true);
             $table->decimal('price', 10, 2);
             $table->float('weight', 10, 2)->nullable();
