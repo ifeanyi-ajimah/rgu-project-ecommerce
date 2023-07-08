@@ -23,6 +23,8 @@ Route::get('/admin', function () {
 })->middleware('guest');
 
 Route::view('/testhome','home');
+Route::view('/testone','externalLayout.main');
+
 
 Auth::routes(['verfiy' => true]);
 // Auth::routes(['verfiy' => true]);
