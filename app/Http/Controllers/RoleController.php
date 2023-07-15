@@ -52,7 +52,7 @@ class RoleController extends Controller
             $role->permissions()->attach($request->permissions);
         }
 
-        // Alert::success('Success', 'Role Added Successfully');
+        Alert::success('Success', 'Role Added Successfully');
         return back();
     }
 

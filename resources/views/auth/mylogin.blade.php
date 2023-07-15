@@ -7,8 +7,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>NOVUS AGRO | Grain Point Application - Login </title>
-    <link rel="shortcut icon" href="{{ asset('img/novusagrologo.png')}}">
+    <title> Male Fashion Dashboard- Login </title>
+    <link rel="shortcut icon" href="{{ asset('img/logo.png')}}">
 
     <link href="{{ asset('inspinia/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ asset('inspinia/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
@@ -24,17 +24,16 @@
         <div class="row">
 
             <div class="col-md-6">
-                <img src="img/novusagrologo.png" alt="novus agro logo">
-                <h2 class="font-bold"> Novus Agro Grain Point Portal </h2>
+                <img src="img/logo.png" alt="male fashion">
+                <h2 class="font-bold"> Male Fashion Portal </h2>
 
                 <p>
-                    Our main objective is to aggregate smallholder farmers and make them available for any stakeholder in the agricultural sector who wants to transact with them.
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 </p>
 
+                <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
                 <p>
-                    Grainpoint is a platform connecting farmers to markets.</p>
-                <p>
-                    <small> Farmers get paid almost immediately at the prevailing market price thereby removing the problem of extortion from middlemen and making market available for farmers. </small>
+                    <small> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, </small>
                 </p>
 
             </div>
@@ -57,7 +56,7 @@
 
                     </form>
                     <p class="m-t">
-                        <small>Novus Agro &copy; 2021</small>
+                        <small>Male Fashiion Agro &copy; 2023</small>
                     </p>
                 </div>
             </div>
@@ -65,10 +64,10 @@
         <hr/>
         <div class="row">
             <div class="col-md-6">
-                Copyright NovusAgro Nigeria Limited. 
+                Male Fashion Limited. 
             </div>
             <div class="col-md-6 text-right">
-               <small>© 2021</small>
+               <small>© 2023</small>
             </div>
         </div>
     </div>

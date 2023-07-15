@@ -17,10 +17,11 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->integer('user_id');
-            $table->string('image')->nullable();
-            // $table->boolean('is_active')->default(true);
+            $table->foreignId('user_id')->constrained();
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categorys');
             $table->boolean('status')->default(true);
+            $table->string('image')->nullable();
             $table->decimal('price', 10, 2);
             $table->float('weight', 10, 2)->nullable();
             $table->integer('amount_in_stock');

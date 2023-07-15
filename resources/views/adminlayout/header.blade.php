@@ -8,9 +8,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    <title> Novus Agro | @yield('title') </title>
+    <title> Male Fashion | @yield('title') </title>
     
-    <link rel="shortcut icon" href="{{ asset('img/novusagrologo.png')}}">
+    <link rel="shortcut icon" href="{{ asset('img/logo.png')}}">
 
 
     <link href="{{ asset('inspinia/css/bootstrap.min.css')}}" rel="stylesheet">

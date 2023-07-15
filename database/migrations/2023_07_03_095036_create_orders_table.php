@@ -15,10 +15,10 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('product_id');
+            $table->foreignId('product_id')->constrained('products')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('item_count');
             $table->float('sum_cost_for_item', 10, 2);
-            $table->integer('user_id')->nullable();
             $table->integer('item_unit_cost');
             $table->date('fulfilment_date')->nullable();
             $table->decimal('delivery_fee',10,2)->nullable();

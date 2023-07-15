@@ -15,7 +15,7 @@ class CreateOrderReferencesTable extends Migration
     {
         Schema::create('order_references', function (Blueprint $table) {
             $table->id();
-            $table->integer('order_id');
+            $table->foreignId('order_id')->constrained('orders')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('order_reference_id');
             $table->boolean('is_fulfilled')->default(true);
             $table->integer('total_price');

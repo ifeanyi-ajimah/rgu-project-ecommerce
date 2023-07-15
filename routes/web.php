@@ -14,22 +14,34 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.mylogin');
-})->middleware('guest');
-
 Route::get('/admin', function () {
     return view('auth.mylogin');
 })->middleware('guest');
 
+
 Route::view('/testhome','home');
-Route::view('/testone','externalLayout.main');
+Route::view('/','externalLayout.home');
+Route::view('about','external.about');
+Route::view('shop','external.shop');
+Route::view('checkout','external.checkout');
+Route::view('contact','external.contact');
 
 
 Auth::routes(['verfiy' => true]);
-// Auth::routes(['verfiy' => true]);
 
 Route::group(['middleware'=>['auth','isAdmin','verified'] ],function () {
+
+    //roles and permission
+Route::resource('role',App\Http\Controllers\RoleController::class);
+Route::resource('permission',App\Http\Controllers\PermissionController::class);
+
+Route::resource('order',App\Http\Controllers\OrderController::class);
+
+//admin
+Route::get('admin-list', [App\Http\Controllers\AdminUserController::class, 'getAdmin']);
+Route::post('add-admin', [App\Http\Controllers\AdminUserController::class, 'addAdmin'])->name('user.store');
+Route::put('update-admin/{id}', [App\Http\Controllers\AdminUserController::class, 'updateAdmin'])->name('user.update');
+
 
 });
 
