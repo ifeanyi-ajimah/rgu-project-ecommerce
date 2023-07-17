@@ -29,9 +29,12 @@ Route::view('contact','external.contact');
 
 Auth::routes(['verfiy' => true]);
 
-Route::group(['middleware'=>['auth','isAdmin','verified'] ],function () {
+Route::group(['middleware'=>['auth','verified','twoFA'] ],function () {
 
-    //roles and permission
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//roles and permission
 Route::resource('role',App\Http\Controllers\RoleController::class);
 Route::resource('permission',App\Http\Controllers\PermissionController::class);
 
@@ -50,5 +53,4 @@ Route::group(['middleware'=>['auth','isCustomer','verified'] ],function () {
 
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

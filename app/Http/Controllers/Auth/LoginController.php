@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OTPMail;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 
 class LoginController extends Controller
 {
@@ -35,6 +38,20 @@ class LoginController extends Controller
         return view('auth.mylogin');
     }
 
+
+    protected function attemptLogin(Request $request)
+    {
+        $result = $this->guard()->attempt(
+            $this->credentials($request), $request->boolean('remember')
+        );
+
+        if($result){
+            $OTP = rand(100000, 999999);
+            Cache::put(['OTP' => $OTP], now()->addMinute(1) );
+            Mail::to($request)->send(new OTPMail($OTP));
+        }
+    }
+
     
     public function authenticate(Request $request)
     {
@@ -54,21 +71,20 @@ class LoginController extends Controller
         ]);
     }
 
-    // protected function authenticated(Request $request, $user)
-    // {
-    //     if ( $user->type != 'admin') {
-    //         $this->logout($request);
+                // protected function authenticated(Request $request, $user)
+                // {
+                //     if ( $user->type != 'admin') {
+                //         $this->logout($request);
 
-    //         return redirect()->back()
-    //             ->withInput($request->only($this->username(), 'remember'))
-    //             ->withErrors([
-    //                 $this->username() => 'You have no business here.'
-    //             ]);
-    //     } else {
-    //         return redirect()->intended($this->redirectPath());
-    //     }
-
-    // }
+                //         return redirect()->back()
+                //             ->withInput($request->only($this->username(), 'remember'))
+                //             ->withErrors([
+                //                 $this->username() => 'You have no business here.'
+                //             ]);
+                //     } else {
+                //         return redirect()->intended($this->redirectPath());
+                //     }
+                // }
 
     /**
      * Create a new controller instance.

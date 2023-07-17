@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->integer('role_id')->nullable();
             $table->boolean('is_active')->default(false);
             $table->string('type');
+            $table->boolean('is_otp_verified')->default(false);
             $table->string('verification_token')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
