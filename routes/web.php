@@ -29,11 +29,10 @@ Route::view('contact','external.contact');
 
 Auth::routes(['verfiy' => true]);
 
+
 Route::group(['middleware'=>['auth','verified','twoFA'] ],function () {
 
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 //roles and permission
 Route::resource('role',App\Http\Controllers\RoleController::class);
 Route::resource('permission',App\Http\Controllers\PermissionController::class);
@@ -45,8 +44,12 @@ Route::get('admin-list', [App\Http\Controllers\AdminUserController::class, 'getA
 Route::post('add-admin', [App\Http\Controllers\AdminUserController::class, 'addAdmin'])->name('user.store');
 Route::put('update-admin/{id}', [App\Http\Controllers\AdminUserController::class, 'updateAdmin'])->name('user.update');
 
-
 });
+
+
+Route::get('/verifyOtp',[App\Http\Controllers\VerifyOTPController::class, 'showVerifyForm']);
+Route::post('/verifyOTP',[App\Http\Controllers\VerifyOTPController::class,'verifyOTP']);
+
 
 
 Route::group(['middleware'=>['auth','isCustomer','verified'] ],function () {

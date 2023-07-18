@@ -14,7 +14,6 @@
 @endif
 
 @if($errors->any())
-<div class="">
     <div class=" alert alert-danger alert-dismissable">
 
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -24,7 +23,7 @@
             @endforeach
         </ul>
     </div>
-</div>
+
 @endif
 
 @if (session('error_note'))

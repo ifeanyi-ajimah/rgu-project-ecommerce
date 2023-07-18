@@ -20,7 +20,7 @@ class TwoFA
         if( Auth::user()->is_otp_verified == 1){
             return $next($request);
         }
-        Auth::logout();
-        return redirect('/admin');
+        
+        return redirect('/verifyOtp');
     }
 }

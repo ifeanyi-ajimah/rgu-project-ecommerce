@@ -7,6 +7,7 @@ use App\Mail\OTPMail;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
@@ -41,35 +42,57 @@ class LoginController extends Controller
 
     protected function attemptLogin(Request $request)
     {
+        // dd($request->email );
         $result = $this->guard()->attempt(
             $this->credentials($request), $request->boolean('remember')
         );
 
         if($result){
-            $OTP = rand(100000, 999999);
-            Cache::put(['OTP' => $OTP], now()->addMinute(1) );
-            Mail::to($request)->send(new OTPMail($OTP));
+            // $OTP = rand(100000, 999999);
+            // Cache::put(['OTP' => $OTP], now()->addMinute(1) );
+            // Mail::to($request->email)->send(new OTPMail($OTP));
+            auth()->user()->sendOTP();
+
         }
     }
 
-    
-    public function authenticate(Request $request)
+    public function logout(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
- 
-        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password'], 'type' => 'admin'])) {
-            $request->session()->regenerate();
- 
-            return redirect()->intended('home');
+        auth()->user()->update(['is_otp_verified' => 1]);
+
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        if ($response = $this->loggedOut($request)) {
+            return $response;
         }
- 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect('/admin');
     }
+
+    
+    // public function authenticate(Request $request)
+    // {
+    //     $credentials = $request->validate([
+    //         'email' => ['required', 'email'],
+    //         'password' => ['required'],
+    //     ]);
+ 
+    //     if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password'], 'type' => 'admin'])) {
+    //         $request->session()->regenerate();
+ 
+    //         return redirect()->intended('home');
+    //     }
+ 
+    //     return back()->withErrors([
+    //         'email' => 'The provided credentials do not match our records.',
+    //     ]);
+    // }
 
                 // protected function authenticated(Request $request, $user)
                 // {

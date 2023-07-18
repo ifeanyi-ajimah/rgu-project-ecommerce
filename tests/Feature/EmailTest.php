@@ -19,7 +19,7 @@ class EmailTest extends TestCase
      *
      * @return void
      */
-    public function test_an_otm_mail_is_sent_before_login()
+    public function test_an_otp_mail_is_sent_before_login()
     {
         Mail::fake();
         $this->withoutExceptionHandling();
@@ -39,5 +39,14 @@ class EmailTest extends TestCase
         $response = $this->post('/login',['email' => $user->email, 'password' => 'sdkfkflaxx']);
 
         Mail::assertNotSent(OTPMail::class);
+    }
+
+    public function test_otp_is_stored_in_cache_for_user()
+    {
+        $user = User::factory()->create();
+        $response = $this->post('/login',['email' => $user->email, 'password' => 'passwowrd']);
+
+        $this->assertNotNull($user->OTP);
+
     }
 }

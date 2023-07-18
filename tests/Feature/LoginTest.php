@@ -36,8 +36,8 @@ class LoginTest extends TestCase
         $user = User::factory()->create(['is_otp_verified' => 1]);
         $this->actingAs($user);
 
-        $this->get('/home')->assertStatus(200);
-        // $this->get('/home')->assertRedirect('/admin');
+        $this->get('/home')->assertRedirect('/verifyOtp');
+        // $this->get('/home')->assertStatus(200);
     }
 
     // public function test_an_action_that_requires_authentication(): void
