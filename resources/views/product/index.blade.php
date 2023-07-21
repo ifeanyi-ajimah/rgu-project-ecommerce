@@ -44,13 +44,12 @@ All Products
             </tr>
             </thead>
             <tbody>
-                @foreach ($products as $product)
+                @foreach ($data['products'] as $product)
                     <tr class="gradeX">
                         <td>{{$loop->iteration}}</td>
                         <td> {{ $product->name }} </td>
                         <td > {{ $product->description }}</td>
-                        {{-- <td class="center"> ₦ {{ number_format($product->price)}}</td> --}}
-                        <td class="center"> ₦ {{$product->price}} </td>
+                        <td class="center"> $ {{$product->price}} </td>
                         <td>
                             <div style="display: inline;" class="custom-control custom-switch">
                                 <input 
@@ -71,7 +70,7 @@ All Products
                         @else
                         <td> <span class="label label-warning"> Unavailable</span> </td>
                         @endif
-                        <td> {{ $product->weight }} </td>
+                        <td> {{ $product->weight }} (kg) </td>
                         <td class="lightGallery">  <span title="product images" > <img src="{{$product->image}}" width="100%" height="70px" > </span> </td>
                         <td class="center"> {{ number_format($product->amount_in_stock)}}</td>
                         <td class=""> <button class="btn btn-success"> <a href="{{route('product.show',$product->id )}}"> <i class="fa fa-eye text-white"></i> </a> </button> | <button class="btn btn-primary"> <a href="{{route('product.edit', $product->id )}}"> <i class="fa fa-edit text-white"></i></a> </button> |

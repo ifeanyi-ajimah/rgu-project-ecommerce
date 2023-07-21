@@ -1,15 +1,15 @@
 @extends('adminlayout.main')
 @section('title')
-    Category
+    Brand
 @endsection
 @section('breadcrumb_one')
-    Category
+    Brand
 @endsection
 @section('breadcrumb_link')
-/category
+/brand
 @endsection
 @section('breadcrumb')
-Category
+Brand
 @endsection 
 
 @section('content')
@@ -18,10 +18,10 @@ Category
         <div class="col-lg-12">
         <div class="ibox ">
             <div class="ibox-title">
-                <h5> Category </h5>
+                <h5> Brand </h5>
                 <div class="ibox-tools">
                     
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#addModal"> Add  category </button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#addModal"> Add  brand </button>
                 </div>
             </div>
             <div class="ibox-content">
@@ -32,22 +32,20 @@ Category
             <tr>
                 <th> S/N </th>
                 <th> Name </th>
-                <th> Description </th>
                 <th> Action </th>
             </tr>
             </thead>
             <tbody>
-            @foreach ($categories as $category)
+            @foreach ($brands as $brand)
             <tr class="grade">
                 <td> {{$loop->iteration}} </td>
-                <td> {{$category->name}}</td>
-                <td>{{$category->description}}</td>
+                <td> {{$brand->name}}</td>
              
-                <td> <button class="btn btn-primary" data-toggle="modal" data-target="#editModal{{$category->id}}"> <a href="#"> <i class="fa fa-edit text-white"></i></a> </button> | <button data-id="{{$category->id}}" class="btn btn-danger delete-category"> <a href="#"> <i class="fa fa-trash text-white"></i></a> </button> </td>
+                <td> <button class="btn btn-primary" data-toggle="modal" data-target="#editModal{{$brand->id}}"> <a href="#"> <i class="fa fa-edit text-white"></i></a> </button> | <button data-id="{{$brand->id}}" class="btn btn-danger delete-brand"> <a href="#"> <i class="fa fa-trash text-white"></i></a> </button> </td>
             </tr>
 
-            <div class="modal fade" id="editModal{{$category->id}}" tabindex="-1" category="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-                <div class="modal-dialog" category="document">
+            <div class="modal fade" id="editModal{{$brand->id}}" tabindex="-1" brand="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                <div class="modal-dialog" brand="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="editModalLabel">Edit </h5>
@@ -56,17 +54,13 @@ Category
                       </button>
                     </div>
                     <div class="modal-body">
-                      <form method="post" action="{{route('category.update',$category->id )}}"  >
+                      <form method="post" action="{{route('brand.update',$brand->id )}}"  >
                         @csrf
                         {{method_field('PUT')}} 
                         <div class="form-group">
                           <label for="name"> Name </label>
-                          <input type="hidden" name="id" value="{{ $category->id }}">
-                          <input type="text" class="form-control" required name="name" value="{{$category->name}}" id="name" aria-describedby="emailHelp" placeholder="Enter a unique name ">
-                        </div>
-                        <div class="form-group">
-                          <label for="description">Description (optional) </label>
-                          <input type="text" class="form-control"  name="description" value="{{$category->description}}" id="description" placeholder="enter description ">
+                          <input type="hidden" name="id" value="{{ $brand->id }}">
+                          <input type="text" class="form-control" required name="name" value="{{$brand->name}}" id="name" aria-describedby="emailHelp" placeholder="Enter a unique name ">
                         </div>
 
                     </div>
@@ -86,7 +80,6 @@ Category
             <tr>
                 <th> S/N </th>
                 <th>Name </th>
-                <th> Description </th>
                 <th> Action </th>
             </tr>
             </tfoot>
@@ -100,31 +93,27 @@ Category
 </div>
 
 {{-- add modal --}}
-<div class="modal fade" id="addModal" tabindex="-1" category="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
-  <div class="modal-dialog" category="document">
+<div class="modal fade" id="addModal" tabindex="-1" brand="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog" brand="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addModalLabel"> Add category </h5>
+        <h5 class="modal-title" id="addModalLabel"> Add brand </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form method="post" action="{{route('category.store')}}"  >
+        <form method="post" action="{{route('brand.store')}}"  >
           @csrf
 
           <div class="form-group">
             <label for="name"> Name </label>
-            <input type="text" class="form-control" value="{{old('name')}}" required name="name" id="name" aria-describedby="emailHelp" placeholder="Enter a unique category name ">
-          </div>
-          <div class="form-group">
-            <label for="description">Description (optional) </label>
-            <input type="text" class="form-control" name="description" value="{{old('description')}}"  id="description" placeholder="enter description ">
+            <input type="text" class="form-control" value="{{old('name')}}" required name="name" id="name" aria-describedby="emailHelp" placeholder="Enter a unique brand name ">
           </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save category </button>
+        <button type="submit" class="btn btn-primary">Save brand </button>
       </div>
     </form>
     </div>
@@ -149,8 +138,8 @@ Category
             buttons: [
                 { extend: 'copy'},
                 {extend: 'csv'},
-                {extend: 'excel', title: 'Categorys'},
-                {extend: 'pdf', title: 'Categorys'},
+                {extend: 'excel', title: 'Brands'},
+                {extend: 'pdf', title: 'Brands'},
 
                 {extend: 'print',
                  customize: function (win){
@@ -170,8 +159,8 @@ Category
 
 
     
-    $('.delete-category').on('click',function(e){
-      var ask = confirm("Are you sure you want to delete this manager ? This can not be undone.  ");
+    $('.delete-brand').on('click',function(e){
+      var ask = confirm("Are you sure you want to delete this brand ? This can not be undone.  ");
       if( ask == true){ 
         let the_user_id = $(this).data('id'); 
                     
@@ -181,7 +170,7 @@ Category
         }
         });
         
-        url = '/manager/'+the_user_id,
+        url = '/brand/'+the_user_id,
         formData = {
             id : the_user_id,
         }

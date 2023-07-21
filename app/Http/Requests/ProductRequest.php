@@ -32,6 +32,10 @@ class ProductRequest extends FormRequest
             'price' => 'required',
             'amount_in_stock' => 'required|integer',
             'is_available' => 'required|integer',
+            'brand_id' => 'required|integer|exists:brands,id',
+            'category_id' => 'required|integer|exists:categories,id',
+            'color' => 'required|string',
+            'size' => 'required|string',
         ];
     }
 }

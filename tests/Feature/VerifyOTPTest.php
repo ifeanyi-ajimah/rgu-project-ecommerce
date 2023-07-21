@@ -42,8 +42,18 @@ class VerifyOTPTest extends TestCase
 
     public function test_invalid_otp_returns_error_message()
     {
-
+        $user = User::factory()->create(); 
+        $this->actingAs($user);
+        $this->post('/verifyOTP',['OTP' => 'invalid otp'])->assertSessionHasErrors();
     }
 
-    
+    public function test_if_no_otp_is_given_then_it_returns_with_error()
+    {
+        $this->withExceptionHandling();
+
+        $user = User::factory()->create(); 
+        $this->actingAs($user);
+        $this->post('/verifyOTP',['OTP' => null ])->assertSessionHasErrors(['OTP']);
+    }
+
 }

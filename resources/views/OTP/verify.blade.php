@@ -53,9 +53,9 @@
                                 </div>
                            <button type="submit" class="btn btn-primary block full-width m-b"> Submit </button> 
                         </form>
-                        {{-- <a href="{{ url('/')}}">
-                            <small> login ? </small>
-                        </a> --}}
+                         <a href="{{ url('/admin')}}">
+                            <small> back ? </small>
+                        </a> 
                         </div>
                     </div>
                 </div>

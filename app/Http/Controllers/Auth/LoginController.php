@@ -42,7 +42,7 @@ class LoginController extends Controller
 
     protected function attemptLogin(Request $request)
     {
-        // dd($request->email );
+        // dd($request->otp_via );
         $result = $this->guard()->attempt(
             $this->credentials($request), $request->boolean('remember')
         );
@@ -51,14 +51,14 @@ class LoginController extends Controller
             // $OTP = rand(100000, 999999);
             // Cache::put(['OTP' => $OTP], now()->addMinute(1) );
             // Mail::to($request->email)->send(new OTPMail($OTP));
-            auth()->user()->sendOTP();
+            auth()->user()->sendOTP($request->otp_via);
 
         }
     }
 
     public function logout(Request $request)
     {
-        auth()->user()->update(['is_otp_verified' => 1]);
+        auth()->user()->update(['is_otp_verified' => 0]);
 
         $this->guard()->logout();
 

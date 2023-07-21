@@ -3,7 +3,7 @@
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
-                    <img alt="novus logo" class="rounded-circle" src="img/logo.png"/>
+                    <img alt="" class="rounded-circle" src="/img/logo.png" />
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="block m-t-xs font-bold">  
                             {{Auth::user()->name }} 
@@ -36,7 +36,9 @@
                 <ul class="nav nav-second-level">
                     <li><a href="{{ url('product/create')}}"> Create Product </a></li>
                     <li class=" "><a href="{{ url('product')}}"> All Product </a></li>
-                    
+                    <li class=" "><a href="{{ url('brand')}}"> Manage Brand </a></li>
+                    <li class=" "><a href="{{ url('size-list')}}"> Manage Size </a></li>
+                    <li class=" "><a href="{{ url('color-list')}}"> Manage Color </a></li>
                 </ul>
             </li>
            
