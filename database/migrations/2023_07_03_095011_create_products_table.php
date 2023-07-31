@@ -28,6 +28,7 @@ class CreateProductsTable extends Migration
             $table->boolean('is_available');
             $table->string('size')->nullable();
             $table->string('color')->nullable();
+            $table->string('deal_status')->nullable();
             $table->foreignId('brand_id')->constrained('brands')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

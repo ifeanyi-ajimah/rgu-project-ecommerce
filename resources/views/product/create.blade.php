@@ -122,6 +122,19 @@ Create Products
                                               @enderror
                                         </div>
                                     </div>
+                                    <div class="form-group row"><label class="col-sm-2 col-form-label"> Deal Status :</label>
+                                        <div class="col-sm-10">
+                                            <select id="deal_status" @error('deal_status') is-invalid @enderror name="deal_status" required class="form-control">
+                                                <option value=""> Deal_status </option>
+                                                @foreach ($data['deal_statuses'] as $deal_status)
+                                                <option value={{$deal_status}}> {{$deal_status }} </option>
+                                                @endforeach
+                                              </select>
+                                              @error('deal_status')
+                                              <div class="alert alert-danger">{{ $message }}</div>
+                                              @enderror
+                                        </div>
+                                    </div>
                                     <div class="form-group row"><label class="col-sm-2 col-form-label">Placeholder Image:</label>
                                         <div class="col-sm-10">
                                             <input type="file" name="image" accept="image/*" @error('image') is-invalid @enderror class="form-control" required >

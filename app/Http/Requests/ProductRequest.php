@@ -36,6 +36,7 @@ class ProductRequest extends FormRequest
             'category_id' => 'required|integer|exists:categories,id',
             'color' => 'required|string',
             'size' => 'required|string',
+            'deal_status' => 'required|string',
         ];
     }
 }

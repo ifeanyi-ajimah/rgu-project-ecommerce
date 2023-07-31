@@ -19,8 +19,10 @@ Route::get('/admin', function () {
 })->middleware('guest');
 
 
-Route::view('/testhome','home');
+// Route::view('/testhome','home');
 Route::view('/','externalLayout.home');
+Route::get('/', [App\Http\Controllers\ExternalController::class, 'index']);
+
 Route::view('about','external.about');
 Route::view('shop','external.shop');
 Route::view('checkout','external.checkout');

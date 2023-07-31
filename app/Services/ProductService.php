@@ -10,6 +10,7 @@ use App\Models\ProductImages;
 use App\Utils\ColorList;
 use App\Utils\FileProcessor;
 use App\Utils\SizeList;
+use App\Utils\DealStatus;
 use Illuminate\Support\Facades\Auth;
 
 class ProductService{
@@ -27,6 +28,7 @@ class ProductService{
         $data['brands'] = Brand::all();
         $data['colors'] = ColorList::ALL_COLORS;
         $data['sizes'] = SizeList::SIZES;
+        $data['deal_statuses'] = DealStatus::DEAL_STATUS_LIST;
         return $data;
     }
 
@@ -36,6 +38,7 @@ class ProductService{
         $data['brands'] = Brand::all();
         $data['colors'] = ColorList::ALL_COLORS;
         $data['sizes'] = SizeList::SIZES;
+        $data['deal_statuses'] = DealStatus::DEAL_STATUS_LIST;
         // $data['product'] = $product;
         return $data;
     }
@@ -94,7 +97,7 @@ class ProductService{
         }
 
         return $product;
-        
+
     }
 
     public function delete($id){
