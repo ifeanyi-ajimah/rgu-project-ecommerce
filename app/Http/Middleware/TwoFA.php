@@ -17,7 +17,7 @@ class TwoFA
      */
     public function handle(Request $request, Closure $next)
     {
-        if( Auth::user()->is_otp_verified == 1){
+        if( Auth::user()->is_otp_verified == 0){
             return $next($request);
         }
         

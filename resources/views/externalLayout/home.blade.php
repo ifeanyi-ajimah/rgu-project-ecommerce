@@ -108,18 +108,19 @@
             </div>
             <div class="row product__filter">
                 @forelse ($products as $product )
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix {{ $product->deal_status }}">
                         <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="{{ asset('menfashionexternal/img/product/product-1.jpg')}}">
+                            {{-- <div class="product__item__pic set-bg" data-setbg="{{ asset('menfashionexternal/img/product/product-1.jpg')}}"> --}}
+                            <div class="product__item__pic set-bg"  data-setbg="{{ $product->image }}">
                                 <span class="label">New</span>
                                 <ul class="product__hover">
-                                    <li><a href="#"><img src="" src="{{ asset('menfashionexternal/img/icon/heart.png')}}" alt=""></a></li>
+                                    <li><a href="#"><img src="{{ asset('menfashionexternal/img/icon/heart.png')}}" alt=""></a></li>
                                     <li><a href="#"><img src="{{ asset('menfashionexternal/img/icon/compare.png')}}" alt=""> <span>Compare</span></a></li>
                                     <li><a href="#"><img src="{{ asset('menfashionexternal/img/icon/search.png')}}" alt=""></a></li>
                                 </ul>
                             </div>
                             <div class="product__item__text">
-                                <h6>Piqué Biker Jacket</h6>
+                                <h6> {{$product->name }} </h6>
                                 <a href="#" class="add-cart">+ Add To Cart 1</a>
                                 <div class="rating">
                                     <i class="fa fa-star-o"></i>

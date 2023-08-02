@@ -20,13 +20,18 @@ Route::get('/admin', function () {
 
 
 // Route::view('/testhome','home');
-Route::view('/','externalLayout.home');
+// Route::view('/','externalLayout.home');
 Route::get('/', [App\Http\Controllers\ExternalController::class, 'index']);
+Route::get('/shop', [App\Http\Controllers\ExternalController::class, 'shopIndex']);
 
 Route::view('about','external.about');
-Route::view('shop','external.shop');
+// Route::view('shop','external.shop');
 Route::view('checkout','external.checkout');
 Route::view('contact','external.contact');
+Route::view('shopping-cart','external.shoppingcart');
+Route::view('product-detail','external.productdetail');
+Route::view('user-login','external.login');
+Route::view('sign-up','external.register');
 
 
 Auth::routes(['verfiy' => true]);
