@@ -14,16 +14,17 @@
 <section class="contact spad">
     <div class="container d-flex align-items-center justify-content-center">
         <div class="row">
-           
             <div class="col-lg-8 col-md-8 ">
+                @include('includes.messages')
                 <div class="contact__form ">
-                    <form action="#">
+                    <form action="{{route('customer-login')}}" method="POST">
+                        @csrf
                         <div class="row">
                             <div class="col-lg-12">
-                                <input type="text" placeholder="Name">
+                                <input type="email" name="email" placeholder="Email">
                             </div>
                             <div class="col-lg-12">
-                                <input type="text" placeholder="Email">
+                                <input type="password" name="password" placeholder="password">
                             </div>
                             <div class="col-lg-12">
                                 <button type="submit" class="site-btn"> Login </button>

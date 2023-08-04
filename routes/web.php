@@ -26,17 +26,16 @@ Route::get('/shop', [App\Http\Controllers\ExternalController::class, 'shopIndex'
 
 Route::view('about','external.about');
 // Route::view('shop','external.shop');
-Route::view('checkout','external.checkout');
+
 Route::view('contact','external.contact');
-Route::view('shopping-cart','external.shoppingcart');
-Route::view('product-detail','external.productdetail');
+
 Route::view('user-login','external.login');
 Route::view('sign-up','external.register');
 
 
 Auth::routes(['verfiy' => true]);
 
-Route::group(['middleware'=>['auth','verified','twoFA'] ],function () {
+Route::group(['middleware'=>['auth','verified','twoFA','usertype:admin'] ],function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //roles and permission
@@ -62,12 +61,18 @@ Route::put('update-admin/{id}', [App\Http\Controllers\AdminUserController::class
 
 
 
-Route::group(['middleware'=>['auth','isCustomer','verified'] ],function () {
+Route::group(['middleware'=>['auth','verified','usertype:customer'] ],function () {
+
+    Route::view('checkout','external.checkout');
+    Route::view('shopping-cart','external.shoppingcart');
+    Route::get('product-detail/{id}',[App\Http\Controllers\ExternalController::class, 'showProduct'])->name('product.detail');
+    Route::get('/shop', [App\Http\Controllers\ExternalController::class, 'shopIndex']);
 
 });
 
 
-
+Route::post('customer-login',[App\Http\Controllers\Auth\CustomerLoginController::class, 'authenticate'])->name('customer-login');
+Route::post('customer-logout',[App\Http\Controllers\Auth\CustomerLoginController::class, 'logout'])->name('customer-logout');
 
 Route::get('/verifyOtp',[App\Http\Controllers\VerifyOTPController::class, 'showVerifyForm']);
 Route::post('/verifyOTP',[App\Http\Controllers\VerifyOTPController::class,'verifyOTP']);

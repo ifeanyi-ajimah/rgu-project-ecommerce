@@ -40,6 +40,7 @@
             <div class="col-md-6">
                 <div class="ibox-content">
                     @include('includes.messages')
+                
                     <form class="m-t" role="form" method="POST" action="{{ route('login')}}">
                         @csrf 
                         <div class="form-group">

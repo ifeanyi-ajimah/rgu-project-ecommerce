@@ -19,4 +19,10 @@ class ExternalController extends Controller
         $products = Product::orderBy('created_at','desc')->paginate(15);
         return view('external.shop',compact('products'));
     }
+
+    public function showProduct(Product $product)
+    {
+        return view('external.productdetail',compact('product'));
+    }
+
 }

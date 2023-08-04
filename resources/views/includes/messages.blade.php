@@ -6,10 +6,10 @@
 </div>
 @endif
 
-@if (session('nooffer'))
+@if (session('errordata'))
 <div class="alert alert-danger alert-dismissable">
 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-<strong>{{ session('nooffer') }}</strong>
+<strong>{{ session('errordata') }}</strong>
 </div>
 @endif
 

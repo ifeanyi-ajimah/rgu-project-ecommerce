@@ -36,7 +36,7 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        return view('auth.mylogin');
+        return view('external.login');
     }
 
 
@@ -46,6 +46,14 @@ class LoginController extends Controller
         $result = $this->guard()->attempt(
             $this->credentials($request), $request->boolean('remember')
         );
+
+        
+
+        if(Auth::user()->type != 'admin'){
+            Auth::logout();
+            // return back()->with('errordata','not allowed');
+            return redirect('/login')->with('errordata', 'no business here!');
+        }
 
         if($result){
             // $OTP = rand(100000, 999999);
