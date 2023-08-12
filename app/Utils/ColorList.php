@@ -13,6 +13,7 @@ public const BLUE = array("name"=>"BLUE", "code"=>"Liter");
 public const WHITE =  array("name"=>"WHITE", "code"=>"Kg");
 public const PURPLE =  array("name"=>"PURPLE", "code"=>"XXX");
 public const GRAY = array("name"=>"GRAY", "code"=>"XXX");
+public const BLACK = array("name"=>"BLACK", "code"=>"XXX");
 
 
 public const ALL_COLORS = [

@@ -49,7 +49,10 @@
                         <div class="form-group">
                             <input type="password" name="password" class="form-control" placeholder="Password" required="">
                         </div>
-                        <div class="form-check">
+
+                        <input class="form-check-input" type="hidden" name="otp_via" value="email_otp" id="flexRadioDefault1" >
+                        
+                        {{-- <div class="form-check">
                             <input class="form-check-input" type="radio" name="otp_via" value="email_otp" id="flexRadioDefault1" checked>
                             <label class="form-check-label" for="flexRadioDefault1">
                               OTP via email
@@ -60,7 +63,7 @@
                             <label class="form-check-label" for="flexRadioDefault2">
                               OTP via sms
                             </label>
-                          </div>
+                          </div> --}}
                         <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 
                         <a href="{{ url('password/reset')}}">

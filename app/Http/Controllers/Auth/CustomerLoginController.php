@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Utils\AdminType;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -29,9 +30,14 @@ class CustomerLoginController extends Controller
         ]);
  
         if (Auth::attempt($credentials)) {
+                
+            if(Auth::user()->type != AdminType::CUSTOMER ){
+                Auth::logout();
+                return redirect('/admin')->with('errordata', 'No business here, sign in here !');
+            }
             $request->session()->regenerate();
- 
-            return redirect()->intended('checkout');
+            return redirect('/shop');
+            // return redirect()->intended('checkout');
         }
  
         return back()->withErrors([

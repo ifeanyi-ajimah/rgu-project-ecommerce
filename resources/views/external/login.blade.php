@@ -1,10 +1,10 @@
 @extends('externalLayout.main')
 
 @section('title')
-    Contact
+    Login
 @endsection
 @section('breadcrumb')
-    Contact
+    Login
 @endsection
 
 @section('content')
@@ -30,6 +30,8 @@
                                 <button type="submit" class="site-btn"> Login </button>
                             </div>
                         </div>
+                        <p>No Account yet? <a href="/sign-up"> Sign Up </a> </p>
+                        <p> Forgot password ? <a href="/password/reset"> Reset Password </a> </p>
                     </form>
                 </div>
             </div>

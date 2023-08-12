@@ -48,7 +48,7 @@ class User extends Authenticatable
     public function cacheTheOTP()
     {
         $OTP = rand(100000,999999);
-        Cache::put([$this->OTPKey() => $OTP], now()->addSeconds(20000));
+        Cache::put([$this->OTPKey() => $OTP], now()->addSeconds(200));
         return $OTP;
     }
 
@@ -65,14 +65,13 @@ class User extends Authenticatable
         }else{
             Mail::to($this->email)->send(new OTPMail($this->cacheTheOTP() ));
         }
-
     }
 
     public function OTP()
     {
-        return Cache::get($this->OTPKey());
+        return Cache::get($this->OTPKey() );
     }
+    
 
-   
     
 }

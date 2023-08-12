@@ -53,8 +53,12 @@
                                 </div>
                            <button type="submit" class="btn btn-primary block full-width m-b"> Submit </button> 
                         </form>
+                         <a href="{{ url('/resend-otp')}}">
+                            <small> Resend OTP </small>
+                        </a> 
+                        <br> <br>
                          <a href="{{ url('/admin')}}">
-                            <small> back ? </small>
+                            <small> Go back ? </small>
                         </a> 
                         </div>
                     </div>

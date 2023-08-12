@@ -53,7 +53,7 @@ Route::get('color-list',[App\Http\Controllers\ProductController::class,'getColor
 
 //admin
 Route::get('admin-list', [App\Http\Controllers\AdminUserController::class, 'index']);
-Route::post('add-admin', [App\Http\Controllers\AdminUserController::class, 'addAdmin'])->name('user.store');
+Route::post('add-admin', [App\Http\Controllers\AdminUserController::class, 'storeAdmin'])->name('user.store');
 Route::put('update-admin/{id}', [App\Http\Controllers\AdminUserController::class, 'updateAdmin'])->name('user.update');
 
 });
@@ -64,17 +64,26 @@ Route::put('update-admin/{id}', [App\Http\Controllers\AdminUserController::class
 Route::group(['middleware'=>['auth','verified','usertype:customer'] ],function () {
 
     Route::view('checkout','external.checkout');
-    Route::view('shopping-cart','external.shoppingcart');
-    Route::get('product-detail/{id}',[App\Http\Controllers\ExternalController::class, 'showProduct'])->name('product.detail');
-    Route::get('/shop', [App\Http\Controllers\ExternalController::class, 'shopIndex']);
-
+    // Route::view('shopping-cart','external.shoppingcart');
+    Route::resource('cart',App\Http\Controllers\CartController::class);
+    Route::post('/cart-update/{id}',[App\Http\Controllers\CartController::class,'cartQuantityUpdate']);
+    
 });
+
+
+
+Route::get('/shop', [App\Http\Controllers\ExternalController::class, 'shopIndex']);
+Route::get('product-detail/{id}',[App\Http\Controllers\ExternalController::class, 'showProduct'])->name('product.detail');
 
 
 Route::post('customer-login',[App\Http\Controllers\Auth\CustomerLoginController::class, 'authenticate'])->name('customer-login');
 Route::post('customer-logout',[App\Http\Controllers\Auth\CustomerLoginController::class, 'logout'])->name('customer-logout');
-
-Route::get('/verifyOtp',[App\Http\Controllers\VerifyOTPController::class, 'showVerifyForm']);
+Route::get('/verifyOtp',[App\Http\Controllers\VerifyOTPController::class, 'showVerifyForm'])->middleware('auth');
 Route::post('/verifyOTP',[App\Http\Controllers\VerifyOTPController::class,'verifyOTP']);
+
+
+Route::get('/resend-otp',[App\Http\Controllers\Auth\LoginController::class,'resendOtp'])->middleware('auth');
+
+
 
 

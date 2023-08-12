@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
@@ -29,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/shop';
 
     /**
      * Create a new controller instance.
@@ -43,7 +44,7 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('auth.mylogin');
+        return view('external.register');
     }
 
     /**
@@ -57,9 +58,17 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => ['required', 'string'],
+            'password' => ['required', 'confirmed', Password::min(8)->letters()
+                            ->mixedCase()
+                            ->numbers()
+                            ->symbols()
+                            ->uncompromised() 
+                           ],
         ]);
     }
+
+    
 
     /**
      * Create a new user instance after a valid registration.
@@ -72,7 +81,18 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
+            'type' => 'customer',
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    // public function redirectPath()
+    // {
+    //     if (method_exists($this, 'redirectTo')) {
+    //         return $this->redirectTo();
+    //     }
+    //     return property_exists($this, 'redirectTo') ? $this->redirectTo : '/shop';
+    // }
+
 }

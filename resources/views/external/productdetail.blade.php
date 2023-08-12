@@ -1,13 +1,13 @@
 @extends('externalLayout.main')
 
 @section('title')
-    Check Out
+    Product Detail
 @endsection
 @section('breadcrumb')
-    Check Out
+    Product Detail
 @endsection
 @section('content')
-
+    
     <!-- Shop Details Section Begin -->
     <section class="shop-details">
         <div class="product__details__pic">
@@ -15,8 +15,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="product__details__breadcrumb">
-                            <a href="./index.html">Home</a>
-                            <a href="./shop.html">Shop</a>
+                            <a href="/">Home</a>
+                            <a href="/shop">Shop</a>
                             <span>Product Details</span>
                         </div>
                     </div>
@@ -26,9 +26,9 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
-                                    <div class="product__thumb__pic set-bg" data-setbg="img/shop-details/thumb-1.png">
+                                    <div class="product__thumb__pic set-bg" data-setbg=" {{$product->image}} ">
                                     </div>
-                                </a>
+                                </a> 
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
@@ -55,7 +55,7 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <div class="product__details__pic__item">
-                                    <img src="img/shop-details/product-big-2.png" alt="">
+                                    <img src="{{ $product->image }}" alt="">
                                 </div>
                             </div>
                             <div class="tab-pane" id="tabs-2" role="tabpanel">
@@ -70,7 +70,7 @@
                             </div>
                             <div class="tab-pane" id="tabs-4" role="tabpanel">
                                 <div class="product__details__pic__item">
-                                    <img src="img/shop-details/product-big-4.png" alt="">
+                                    <img src="{{ $product->image }}" alt="">
                                     <a href="https://www.youtube.com/watch?v=8PJ3_p7VqHw&list=RD8PJ3_p7VqHw&start_radio=1" class="video-popup"><i class="fa fa-play"></i></a>
                                 </div>
                             </div>
@@ -84,7 +84,9 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-8">
                         <div class="product__details__text">
-                            <h4>Hooded thermal anorak</h4>
+                            <form action="{{ route('cart.store')}}" method="POST">
+                                @csrf
+                            <h4> {{ $product->name }} </h4>
                             <div class="rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -93,57 +95,59 @@
                                 <i class="fa fa-star-o"></i>
                                 <span> - 5 Reviews</span>
                             </div>
-                            <h3>$270.00 <span>70.00</span></h3>
-                            <p>Coat with quilted lining and an adjustable hood. Featuring long sleeves with adjustable
-                                cuff tabs, adjustable asymmetric hem with elastic side tabs and a front zip fastening
-                            with placket.</p>
+                            <h3>$ {{ $product->price }} <span>  </span></h3>
+                            <p>
+                                {{ $product->description }}
+                            </p>
                             <div class="product__details__option">
                                 <div class="product__details__option__size">
                                     <span>Size:</span>
-                                    <label for="xxl">xxl
-                                        <input type="radio" id="xxl">
+                                    <label class="active" for="xxl">xxl
+                                        <input checked type="radio" name="size" value="XXL" id="xxl">
                                     </label>
-                                    <label class="active" for="xl">xl
-                                        <input type="radio" id="xl">
+                                    <label for="xl">xl
+                                        <input type="radio" name="size" value="XL" id="xl">
                                     </label>
                                     <label for="l">l
-                                        <input type="radio" id="l">
+                                        <input type="radio" name="size" value="L" id="l">
                                     </label>
                                     <label for="sm">s
-                                        <input type="radio" id="sm">
+                                        <input type="radio" name="size" value="S" id="sm">
                                     </label>
                                 </div>
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <div class="product__details__option__color">
-                                    <span>Color:</span>
+                                    <span>Colors:</span>
                                     <label class="c-1" for="sp-1">
-                                        <input type="radio" id="sp-1">
+                                        <input type="radio" value="BLACK" name="color" id="sp-1">
                                     </label>
                                     <label class="c-2" for="sp-2">
-                                        <input type="radio" id="sp-2">
+                                        <input type="radio" value="BLUE" name="color" id="sp-2">
                                     </label>
                                     <label class="c-3" for="sp-3">
-                                        <input type="radio" id="sp-3">
+                                        <input type="radio" value="YELLOW" name="color" id="sp-3">
                                     </label>
                                     <label class="c-4" for="sp-4">
-                                        <input type="radio" id="sp-4">
+                                        <input type="radio" value="RED" name="color" id="sp-4">
                                     </label>
                                     <label class="c-9" for="sp-9">
-                                        <input type="radio" id="sp-9">
+                                        <input type="radio" value="WHITE" name="color" id="sp-9">
                                     </label>
                                 </div>
                             </div>
                             <div class="product__details__cart__option">
                                 <div class="quantity">
                                     <div class="pro-qty">
-                                        <input type="text" value="1">
+                                        <input type="number" min="1" value="1" name="quantity">
                                     </div>
                                 </div>
-                                <a href="#" class="primary-btn">add to cart</a>
+                                {{-- <a href="#" class="primary-btn">add to cart</a> --}}
+                                <input type="submit" class="primary-btn" value="add to cart">
                             </div>
-                            <div class="product__details__btns__option">
+                            {{-- <div class="product__details__btns__option">
                                 <a href="#"><i class="fa fa-heart"></i> add to wishlist</a>
                                 <a href="#"><i class="fa fa-exchange"></i> Add To Compare</a>
-                            </div>
+                            </div> --}}
                             <div class="product__details__last__option">
                                 <h5><span>Guaranteed Safe Checkout</span></h5>
                                 <img src="img/shop-details/details-payment.png" alt="">
@@ -152,7 +156,8 @@
                                     <li><span>Categories:</span> Clothes</li>
                                     <li><span>Tag:</span> Clothes, Skin, Body</li>
                                 </ul>
-                            </div>
+                            </div> 
+                        </form>
                         </div>
                     </div>
                 </div>

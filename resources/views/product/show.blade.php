@@ -23,7 +23,6 @@ Show Product
                 <div class="row">
                     <div class="col-md-5">
 
-
                         <div class="product-images">
                             <div>
                                 <div class="image-imitation">
@@ -37,10 +36,6 @@ Show Product
                                     </div>
                                 </div>
                             @endforeach
-                            
-                            
-
-
                         </div>
 
                     </div>

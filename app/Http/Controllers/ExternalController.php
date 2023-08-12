@@ -20,8 +20,10 @@ class ExternalController extends Controller
         return view('external.shop',compact('products'));
     }
 
-    public function showProduct(Product $product)
+    public function showProduct($id)
     {
+        $product = Product::find($id);
+
         return view('external.productdetail',compact('product'));
     }
 

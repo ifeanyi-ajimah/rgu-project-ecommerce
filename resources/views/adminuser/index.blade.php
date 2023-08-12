@@ -16,7 +16,9 @@ Admin
 @section('content')
 
 <div class="wrapper wrapper-content animated fadeInRight">
-  @include('includes.messages')
+  
+  {{-- @include('includes.messages') --}}
+
     <div class="row">
         <div class="col-lg-12">
         <div class="ibox ">

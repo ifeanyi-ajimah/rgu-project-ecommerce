@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Mail\OTPMail;
 use App\Providers\RouteServiceProvider;
+use App\Utils\AdminType;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -34,31 +35,38 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest')->except(['logout','resendOtp']);
+    }
+
     public function showLoginForm()
     {
         return view('external.login');
     }
 
-
     protected function attemptLogin(Request $request)
     {
-        // dd($request->otp_via );
+        
         $result = $this->guard()->attempt(
             $this->credentials($request), $request->boolean('remember')
         );
 
-        
-
-        if(Auth::user()->type != 'admin'){
+        if(Auth::user()->type != AdminType::ADMIN ){
             Auth::logout();
-            // return back()->with('errordata','not allowed');
-            return redirect('/login')->with('errordata', 'no business here!');
+            return redirect('/login')->with('errordata', 'No business there, sign in here !');
         }
 
         if($result){
             // $OTP = rand(100000, 999999);
             // Cache::put(['OTP' => $OTP], now()->addMinute(1) );
             // Mail::to($request->email)->send(new OTPMail($OTP));
+            // dd($request->otp_via);
             auth()->user()->sendOTP($request->otp_via);
 
         }
@@ -83,47 +91,12 @@ class LoginController extends Controller
             : redirect('/admin');
     }
 
-    
-    // public function authenticate(Request $request)
-    // {
-    //     $credentials = $request->validate([
-    //         'email' => ['required', 'email'],
-    //         'password' => ['required'],
-    //     ]);
- 
-    //     if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password'], 'type' => 'admin'])) {
-    //         $request->session()->regenerate();
- 
-    //         return redirect()->intended('home');
-    //     }
- 
-    //     return back()->withErrors([
-    //         'email' => 'The provided credentials do not match our records.',
-    //     ]);
-    // }
-
-                // protected function authenticated(Request $request, $user)
-                // {
-                //     if ( $user->type != 'admin') {
-                //         $this->logout($request);
-
-                //         return redirect()->back()
-                //             ->withInput($request->only($this->username(), 'remember'))
-                //             ->withErrors([
-                //                 $this->username() => 'You have no business here.'
-                //             ]);
-                //     } else {
-                //         return redirect()->intended($this->redirectPath());
-                //     }
-                // }
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function resendOtp()
     {
-        $this->middleware('guest')->except('logout');
+        auth()->user()->sendOTP('email_otp');
+        return back()->with('status', 'New OTP sent. Kindly check your email !');
+        return back();
     }
+
+    
 }

@@ -3,15 +3,15 @@
         <div class="row">
             <div class="col-lg-6 col-md-7">
                 <div class="header__top__left">
-                    <p>Free shipping, 30-day return or refund xx.</p>
+                    <p>   </p>
                 </div>
             </div>
             <div class="col-lg-6 col-md-5">
                 <div class="header__top__right">
                     <div class="header__top__links">
                         @guest
-                        <a href="#">Sign in</a>
-                        <a href="#"> Sign Up </a>
+                        <a href="{{ url('user-login')}}">Sign in</a>
+                        <a href="{{ url('sign-up')}}"> Sign Up </a>
                         @endguest
                     </div>
                     <div class="header__top__hover">

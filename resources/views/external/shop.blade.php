@@ -180,9 +180,9 @@
                 <div class="shop__product__option">
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="shop__product__option__left">
+                            {{-- <div class="shop__product__option__left">
                                 <p>Showing 1–12 of 126 results</p>
-                            </div>
+                            </div> --}}
                         </div>
                         {{-- <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="shop__product__option__right">
@@ -210,7 +210,7 @@
                                 </div>
                                 <div class="product__item__text">
                                     <h6> {{$product->name }}</h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
+                                    <a href="{{route('product.detail', $product->id )}}" class="add-cart">+ Add To Cart </a>
                                     <div class="rating">
                                         <i class="fa fa-star-o"></i>
                                         <i class="fa fa-star-o"></i>
@@ -218,7 +218,7 @@
                                         <i class="fa fa-star-o"></i>
                                         <i class="fa fa-star-o"></i>
                                     </div>
-                                    <h5>$67.24</h5>
+                                    <h5> $ {{ $product->price }} </h5>
                                     <div class="product__color__select">
                                         <label for="pc-4">
                                             <input type="radio" id="pc-4">
@@ -634,7 +634,7 @@
                     </div> --}}
 
                 </div>
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-lg-12">
                         <div class="product__pagination">
                             <a class="active" href="#">1</a>
@@ -644,7 +644,7 @@
                             <a href="#">21</a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

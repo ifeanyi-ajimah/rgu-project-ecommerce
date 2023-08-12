@@ -23,27 +23,31 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse ($carts as $cart)
                             <tr>
                                 <td class="product__cart__item">
                                     <div class="product__cart__item__pic">
                                         <img src="img/shopping-cart/cart-1.jpg" alt="">
                                     </div>
                                     <div class="product__cart__item__text">
-                                        <h6>T-shirt Contrast Pocket</h6>
-                                        <h5>$98.49</h5>
+                                        <h6> {{$cart->product->name }} </h6>
+                                        <h5> {{ $cart->price }} </h5>
                                     </div>
                                 </td>
                                 <td class="quantity__item">
                                     <div class="quantity">
-                                        <div class="pro-qty-2">
-                                            <input type="text" value="1">
+                                        <div class="pro-qty-2 ">
+                                            <input class="itemCount" id="qty{{ $cart->id }}" type="number" min="1" data-id="{{$cart->id}}" value="{{$cart->quantity}}">
                                         </div>
                                     </div>
                                 </td>
-                                <td class="cart__price">$ 30.00</td>
+                                <td class="cart__price"   > $ <span  id="tprice{{ $cart->id }}" > {{ $cart->total_price }} </span> </td>
                                 <td class="cart__close"><i class="fa fa-close"></i></td>
                             </tr>
-                            <tr>
+                            @empty
+                                <p>No Cart Item </p>
+                            @endforelse
+                            {{-- <tr>
                                 <td class="product__cart__item">
                                     <div class="product__cart__item__pic">
                                         <img src="img/shopping-cart/cart-2.jpg" alt="">
@@ -102,14 +106,14 @@
                                 </td>
                                 <td class="cart__price">$ 30.00</td>
                                 <td class="cart__close"><i class="fa fa-close"></i></td>
-                            </tr>
+                            </tr> --}}
                         </tbody>
                     </table>
                 </div>
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="continue__btn">
-                            <a href="#">Continue Shopping</a>
+                            <a href="shop">Continue Shopping</a>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
@@ -143,6 +147,34 @@
 
 @endsection
 
+@section('scripts')
+<script>
 
+    $('.itemCount').on('change', function (e) {
+        var cart_id = $(this).data('id'); 
+        var new_qty = $("#qty"+cart_id).val();
+        // alert(new_qty);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+                });
+        
+                url = '/cart-update/'+cart_id,
+                formData = {
+                    id : cart_id,
+                    qty : new_qty,
+                }
+                $.post(url, formData).done(function (data) {
+                    //console.log(cart_id)
+                    //    console.log(data.response.data.total_price);
+                    //    $("#tprice"+cart_id).val(data.response.data.total_price)
+                    console.log( $("#tprice"+cart_id).val()  )
+                    }).fail(function (error) {
+                        console.log(error);
+                    });
+             });
+</script>
 
+@endsection
 
