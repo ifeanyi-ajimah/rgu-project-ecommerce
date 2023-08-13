@@ -9,6 +9,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use App\Services\ProductService;
 use App\Utils\ColorList;
 use App\Utils\SizeList;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -27,10 +28,11 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $this->authorize('view-products', Auth::user() );
         $data = $this->productservice->index();
         
         return view('product.index',compact('data'));
-
+        
     }
 
     /**
@@ -40,6 +42,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $this->authorize('manage-products', Auth::user() );
         $data = $this->productservice->create();
 
         return view('product.create',compact('data'));
@@ -53,6 +56,7 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        $this->authorize('manage-products', Auth::user() );
         $validated = $request->validated();
         $data = $this->productservice->store($validated);
 
@@ -79,6 +83,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $this->authorize('manage-products', Auth::user() );
         $data = $this->productservice->edit();
 
         return view('product.edit',compact('data','product'));
@@ -86,6 +91,8 @@ class ProductController extends Controller
 
     public function activateProduct(Request $request)
     { 
+
+        $this->authorize('manage-products', Auth::user() );
         $validator = Validator::make($request->all(), [
             'id' => 'required',
         ]);
@@ -135,6 +142,7 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, $product)
     {
+        $this->authorize('manage-products', Auth::user() );
         $validated = $request->validated();
         $data = $this->productservice->update($validated,$product);
 

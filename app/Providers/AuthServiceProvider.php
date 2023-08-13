@@ -25,7 +25,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('manage-user','App\Policies\UserPolicy@manageUsers');
+        Gate::define('manage-users','App\Policies\UserPolicy@manageUsers');
         Gate::define('view-users','App\Policies\UserPolicy@viewUsers');
         
         Gate::define('manage-products','App\Policies\ProductPolicy@manageProducts');
@@ -36,6 +36,9 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('manage-orders','App\Policies\OrderPolicy@manageOrders');
         Gate::define('view-orders','App\Policies\OrderPolicy@viewOrders');
+
+        Gate::define('manage-roles-and-permissions','App\Policies\RolePolicy@manageRolesAndPermissions');
+        Gate::define('view-roles-and-permissions','App\Policies\RolePolicy@viewRolesAndPermissions');
 
     }
 }

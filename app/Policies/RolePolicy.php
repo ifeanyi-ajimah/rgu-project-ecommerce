@@ -16,7 +16,7 @@ class RolePolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function manageRolesAndPermission(User $user)
+    public function manageRolesAndPermissions(User $user)
     {
         foreach($user->role->permissions as $permit)
         {

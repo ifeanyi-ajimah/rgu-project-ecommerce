@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Services\UserService;
+use Illuminate\Support\Facades\Auth;
 
 class AdminUserController extends Controller
 {
@@ -23,6 +24,7 @@ class AdminUserController extends Controller
 
     public function index()
     {
+        $this->authorize('view-users', Auth::user() );
         $data = $this->userservice->index();
 
         return view('adminuser.index',compact('data'));
@@ -30,6 +32,8 @@ class AdminUserController extends Controller
     
     public function storeAdmin(UserRequest $request)
     {
+        $this->authorize('manage-users', Auth::user() );
+
         $data = $request->validated();
         $user = $this->userservice->storeAdmin($data);
 
@@ -40,6 +44,8 @@ class AdminUserController extends Controller
 
     public function updateAdmin(UserRequest $request , $id)
     {
+        $this->authorize('manage-users', Auth::user() );
+
         $data = $request->validated();
         $user = $this->userservice->updateAdmin($data,$id);
 

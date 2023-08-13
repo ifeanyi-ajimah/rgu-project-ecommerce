@@ -23,6 +23,7 @@
             <li>
                 <a href="/home"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span></a>
             </li>
+            @can('view-categories', Auth::user() )
             <li class=" ">
                 <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label"> Category </span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -31,6 +32,8 @@
                     
                 </ul>
             </li>
+            @endcan
+            @can('view-products', Auth::user() )
             <li class=" ">
                 <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Product </span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -41,22 +44,24 @@
                     <li class=" "><a href="{{ url('color-list')}}"> Manage Color </a></li>
                 </ul>
             </li>
-           
+            @endcan
+            @can('view-orders', Auth::user() )
             <li>
                 <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label"> Orders </span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li><a href="{{url('order')}}"> All Orders </a></li>
                 </ul>
             </li>
-            {{-- @can('manage-user', Auth::user() ) --}}
+            @endcan
+            @can('view-users', Auth::user() )
             <li>
                 <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">User Management</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li><a href="{{ url('admin-list')}}">All Users</a></li>
                 </ul>
             </li>
-            {{-- @endcan  --}}
-            {{-- @can('manage-roles-and-permissions', Auth::user() ) --}}
+            @endcan 
+            @can('view-roles-and-permissions', Auth::user() )
             <li>
                 <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Role Management</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
@@ -69,7 +74,7 @@
                     <li><a href="{{ url('permission')}}"> Permission </a></li>
                 </ul>
             </li>
-            {{-- @endcan --}}
+            @endcan
 
         </ul>
 

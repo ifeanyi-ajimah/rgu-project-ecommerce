@@ -6,6 +6,7 @@ use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Services\CategoryService;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
@@ -17,6 +18,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $this->authorize('view-categories', Auth::user() );
+
         $categories = Category::all();
         return view('category.index', compact('categories'));
     }
@@ -39,6 +42,8 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
+        $this->authorize('manage-categories', Auth::user() );
+
         $data = $request->validated();
         Category::create($data);
         Alert::success('Success', 'Category Added Successfully');
@@ -76,6 +81,8 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request,  $id)
     {
+        $this->authorize('manage-categories', Auth::user() );
+
         $data = $request->validated();
         $category = Category::find($id);
         $category->update($data);
@@ -91,6 +98,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        $this->authorize('manage-categories', Auth::user() );
+
         //$category->delete();
         Alert::success('Success', 'Brand Deleted');
         return back();
