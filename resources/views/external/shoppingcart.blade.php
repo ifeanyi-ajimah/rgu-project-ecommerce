@@ -23,7 +23,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($carts as $cart)
+                            @forelse ($data['carts'] as $cart)
                             <tr>
                                 <td class="product__cart__item">
                                     <div class="product__cart__item__pic">
@@ -42,7 +42,7 @@
                                     </div>
                                 </td>
                                 <td class="cart__price"   > $ <span  id="tprice{{ $cart->id }}" > {{ $cart->total_price }} </span> </td>
-                                <td class="cart__close"><i class="fa fa-close"></i></td>
+                                <td class="cart__close"> <span class="deletecart" data-id="{{$cart->id}}" > <i class="fa fa-close "></i> </span> </td>
                             </tr>
                             @empty
                                 <p>No Cart Item </p>
@@ -118,7 +118,7 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="continue__btn update__btn">
-                            <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
+                            <a href="/cart"><i class="fa fa-spinner"></i> Update cart</a>
                         </div>
                     </div>
                 </div>
@@ -134,10 +134,12 @@
                 <div class="cart__total">
                     <h6>Cart total</h6>
                     <ul>
-                        <li>Subtotal <span>$ 169.50</span></li>
-                        <li>Total <span>$ 169.50</span></li>
+                        <li>Subtotal <span id="subTotal">$ {{ $data['cartSum']}} </span></li>
+                        <li>Total <span id="subTotal2" >$ {{ $data['cartSum']}} </span></li>
                     </ul>
-                    <a href="#" class="primary-btn">Proceed to checkout</a>
+                    @if ($data['cartSum'] > 0 )
+                    <a href="/checkout" class="primary-btn">Proceed to checkout</a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -153,7 +155,6 @@
     $('.itemCount').on('change', function (e) {
         var cart_id = $(this).data('id'); 
         var new_qty = $("#qty"+cart_id).val();
-        // alert(new_qty);
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -166,15 +167,59 @@
                     qty : new_qty,
                 }
                 $.post(url, formData).done(function (data) {
-                    //console.log(cart_id)
-                    //    console.log(data.response.data.total_price);
-                    //    $("#tprice"+cart_id).val(data.response.data.total_price)
-                    console.log( $("#tprice"+cart_id).val()  )
+                    // console.log(data.response.data.sumCart)
+
+                    $("#subTotal").text(data.response.data.sumCart)
+                    $("#subTotal2").text(data.response.data.sumCart)
+                    $("#tprice"+cart_id).text(data.response.data.cart.total_price)
                     }).fail(function (error) {
                         console.log(error);
                     });
              });
+
+             
+             
+             $('.deletecart').on('click',function(e){
+                
+                  var ask = confirm("Are you sure you want to delete this cart item?  ");
+                 if( ask == true){ 
+                    let the_cart_id = $(this).data('id'); 
+                    alert(the_cart_id)
+                $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+                });
+        
+                url = '/cart-remove/'+the_cart_id,
+                formData = {
+                    id : the_cart_id,
+                }
+                $.post(url, formData).done(function (data) {
+                    //    alert("deleted")
+                       location.reload();
+                    }).fail(function (error) {
+                        console.log(error);
+                    });
+                 }
+             });
+
 </script>
 
 @endsection
 
+
+{{-- $.ajax({
+    url: '/peoples/' + id,
+    type: 'DELETE',
+    dataType: 'json',
+    data: {
+        _token: {{ csrf_token() }}
+    },
+    success: function(response) {
+        console.log(response);
+    },
+    error: function(response) {
+        console.log(response);
+    }
+}); --}}

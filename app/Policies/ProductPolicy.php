@@ -16,9 +16,15 @@ class ProductPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function manageProducts(User $user)
     {
-        //
+        foreach($user->role->permissions as $permit)
+        {
+            if($permit->id == 3 || $user->role->name == 'Super Admin'){
+                return true;
+                }
+        }
+        return false;
     }
 
     /**
@@ -28,9 +34,15 @@ class ProductPolicy
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Product $product)
+    public function viewProducts(User $user)
     {
-        //
+        foreach($user->role->permissions as $permit)
+        {
+            if($permit->id == 4 || $user->role->name == 'Super Admin'){
+                return true;
+                }
+        }
+        return false;
     }
 
     /**

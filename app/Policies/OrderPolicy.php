@@ -16,9 +16,15 @@ class OrderPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function manageOrders(User $user)
     {
-        //
+        foreach($user->role->permissions as $permit)
+        {
+            if($permit->id == 7 || $user->role->name == 'Super Admin'){
+                return true;
+                }
+        }
+        return false;
     }
 
     /**
@@ -28,9 +34,15 @@ class OrderPolicy
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Order $order)
+    public function viewOrders(User $user)
     {
-        //
+        foreach($user->role->permissions as $permit)
+        {
+            if($permit->id == 8 || $user->role->name == 'Super Admin'){
+                return true;
+                }
+        }
+        return false;
     }
 
     /**

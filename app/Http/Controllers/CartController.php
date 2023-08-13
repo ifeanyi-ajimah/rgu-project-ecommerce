@@ -17,8 +17,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        $carts = Cart::where('user_id',Auth::user()->id )->get();
-        return view('external.shoppingcart',compact('carts'));
+        $data['carts'] = Cart::where('user_id',Auth::user()->id )->get();
+        $data['cartSum'] = Cart::where('user_id',Auth::user()->id)->sum('total_price');
+        return view('external.shoppingcart',compact('data'));
 
     }
 
@@ -27,9 +28,11 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function checkOut()
     {
-        //
+        $data['carts'] = Cart::where('user_id',Auth::user()->id )->get();
+        $data['cartSum'] = Cart::where('user_id',Auth::user()->id)->sum('total_price');
+        return view('external.checkout',compact('data'));
     }
 
     /**
@@ -82,24 +85,6 @@ class CartController extends Controller
      */
     public function update(Request $request,  $id)
     {
-        $credentials = $request->validate([
-            'id' => ['required', 'integer'],
-            'qty' => ['required','integer'],
-        ]);
-
-        return $credentials['id'];
-
-        // id, qty
-        $cart = Cart::find($id );
-        $cart->quantity = $credentials['qty'];
-        $cart->total_price = $cart->price * $credentials['qty'];
-
-        $cart->save();
-
-        return response()->json([ 'response' => [
-            'status' => 'success',
-            'data' => $cart,
-        ]]);
 
     }
 
@@ -110,21 +95,30 @@ class CartController extends Controller
             'id' => ['required', 'integer'],
             'qty' => ['required','integer'],
         ]);
-
-        // return $credentials['id'];
         
         $cart = Cart::find($id);
         $cart->quantity = $credentials['qty'];
         $cart->total_price = $cart->price * $credentials['qty'];
-
         $cart->save();
-
+        $data['cart'] = $cart;
+        $data['sumCart'] = Cart::where('user_id',Auth::user()->id)->sum('total_price');
         return response()->json([ 'response' => [
             'status' => 'success',
-            'data' => $cart,
+            'data' => $data,
         ]
         ]);
 
+    }
+
+    public function cartRemove($id)
+    {
+        $cart = Cart::find($id);
+        $cart->delete();
+        return response()->json([ 'response' => [
+            'status' => 'success',
+            'message' => 'Item deleted',
+        ]
+        ]);
     }
 
     /**
@@ -135,6 +129,7 @@ class CartController extends Controller
      */
     public function destroy(Cart $cart)
     {
-        //
+        $cart->delete();
+        return back()->with('status','Cart Deleted');
     }
 }

@@ -16,9 +16,15 @@ class CategoryPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function manageCategories(User $user)
     {
-        //
+        foreach($user->role->permissions as $permit)
+        {
+            if($permit->id == 5 || $user->role->name == 'Super Admin'){
+                return true;
+                }
+        }
+        return false;
     }
 
     /**
@@ -28,9 +34,15 @@ class CategoryPolicy
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Category $category)
+    public function viewCategories(User $user)
     {
-        //
+        foreach($user->role->permissions as $permit)
+        {
+            if($permit->id == 6 || $user->role->name == 'Super Admin'){
+                return true;
+                }
+        }
+        return false;
     }
 
     /**

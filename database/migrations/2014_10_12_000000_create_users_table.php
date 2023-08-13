@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone')->nullable();
-            $table->integer('role_id')->nullable();
+            $table->foreign('role_id')->nullable()->references('id')->on('roles');
             $table->boolean('is_active')->default(false);
             $table->string('type');
             $table->boolean('is_otp_verified')->default(false);

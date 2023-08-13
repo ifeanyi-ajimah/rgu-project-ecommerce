@@ -16,9 +16,15 @@ class RolePolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function manageRolesAndPermission(User $user)
     {
-        //
+        foreach($user->role->permissions as $permit)
+        {
+            if($permit->id == 9 || $user->role->name == 'Super Admin'){
+                return true;
+                }
+        }
+        return false;
     }
 
     /**
@@ -28,9 +34,15 @@ class RolePolicy
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Role $role)
+    public function viewRolesAndPermissions(User $user, Role $role)
     {
-        //
+        foreach($user->role->permissions as $permit)
+        {
+            if($permit->id == 10 || $user->role->name == 'Super Admin'){
+                return true;
+                }
+        }
+        return false;
     }
 
     /**

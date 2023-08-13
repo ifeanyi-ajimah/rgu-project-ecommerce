@@ -27,7 +27,9 @@
                 <a href="#" class="search-switch"><img src="{{ asset('menfashionexternal/img/icon/search.png')}}" alt=""></a>
                 <a href="#"><img src="{{ asset('menfashionexternal/img/icon/heart.png')}}" alt=""></a>
                 <a href="#"><img src="{{ asset('menfashionexternal/img/icon/cart.png')}}" alt=""> <span>0</span></a>
-                <div class="price">$0.00</div>
+                @auth
+                <div  class="price">View cart <a href="/cart"> $ {{ getCartSum() }} </a>  </div>
+                @endauth
             </div>
         </div>
     </div>
