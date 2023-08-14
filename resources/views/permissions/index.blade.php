@@ -43,7 +43,7 @@ Permission
                 <td> {{$permission->name}}</td>
                 <td>{{$permission->description}}</td>
              
-                <td> <button class="btn btn-success"> <a href="#"> <i class="fa fa-eye text-white"></i> </a> </button> | <button class="btn btn-primary" data-toggle="modal" data-target="#editModal{{$permission->id}}"> <a href="#"> <i class="fa fa-edit text-white"></i></a> </button> | <button data-id="{{$permission->id}}" class="btn btn-danger delete-permission"> <a href="#"> <i class="fa fa-trash text-white"></i></a> </button> </td>
+                <td> <button class="btn btn-primary" data-toggle="modal" data-target="#editModal{{$permission->id}}"> <a href="#"> <i class="fa fa-edit text-white"></i></a> </button> | <button data-id="{{$permission->id}}" class="btn btn-danger delete-permission"> <a href="#"> <i class="fa fa-trash text-white"></i></a> </button> </td>
             </tr>
 
             <div class="modal fade" id="editModal{{$permission->id}}" tabindex="-1" permission="dialog" aria-labelledby="editModalLabel" aria-hidden="true">

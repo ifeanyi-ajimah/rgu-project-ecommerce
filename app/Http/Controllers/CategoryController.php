@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Services\CategoryService;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
@@ -16,6 +18,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $this->authorize('view-categories', Auth::user() );
+
         $categories = Category::all();
         return view('category.index', compact('categories'));
     }
@@ -36,14 +40,11 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|string|max:80|unique:categorys',
-            'description' => 'nullable|string',
-        ]);
+        $this->authorize('manage-categories', Auth::user() );
 
-        $data = $request->except(['_token']);
+        $data = $request->validated();
         Category::create($data);
         Alert::success('Success', 'Category Added Successfully');
         return back();
@@ -78,15 +79,12 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $id)
+    public function update(CategoryRequest $request,  $id)
     {
-        $this->validate($request, [
-            'name' => 'required|string|max:80|unique:categorys,name,'.$id,
-            'description' => 'nullable|string',
-        ]);
+        $this->authorize('manage-categories', Auth::user() );
 
+        $data = $request->validated();
         $category = Category::find($id);
-        $data = $request->except(['_token']);
         $category->update($data);
         Alert::success('Success', 'Category Updated');
         return back();
@@ -100,6 +98,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $this->authorize('manage-categories', Auth::user() );
+
+        //$category->delete();
+        Alert::success('Success', 'Brand Deleted');
+        return back();
     }
 }

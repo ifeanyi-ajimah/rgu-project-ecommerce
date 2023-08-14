@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>NOVUS AGRO | Grain Point Application - Login </title>
+    <title> Male Fashion - Login </title>
     <link rel="shortcut icon" href="{{ asset('img/novusagrologo.png')}}">
 
     <link href="{{ asset('inspinia/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -24,8 +24,8 @@
         <div class="row">
 
             <div class="col-md-6">
-                <img src="img/novusagrologo.png" alt="novus agro logo">
-                <h2 class="font-bold"> Novus Agro Grain Point Portal </h2>
+                <img src="img/logo.png" alt="novus agro logo">
+                <h2 class="font-bold"> Male Fashion </h2>
 
                 <p>
                     Our main objective is to aggregate smallholder farmers and make them available for any stakeholder in the agricultural sector who wants to transact with them.
@@ -57,7 +57,7 @@
 
                     </form>
                     <p class="m-t">
-                        <small>Novus Agro &copy; 2021</small>
+                        <small> Male Fashion &copy; 2023</small>
                     </p>
                 </div>
             </div>
@@ -65,10 +65,10 @@
         <hr/>
         <div class="row">
             <div class="col-md-6">
-                Copyright NovusAgro Nigeria Limited. 
+                Copyright Male Fashion. 
             </div>
             <div class="col-md-6 text-right">
-               <small>© 2021</small>
+               <small>© 2023</small>
             </div>
         </div>
     </div>

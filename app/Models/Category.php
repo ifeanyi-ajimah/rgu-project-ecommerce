@@ -9,12 +9,22 @@ class Category extends Model
 {
     use HasFactory;
 
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    
+    protected $table = 'categories';
+
     protected $fillable = ['name','description'];
 
     public function products()
     {
         return $this->hasMany('App\Models\Product');
     }
+
+
     
 }
 

@@ -15,7 +15,7 @@
                                 <h2>Fall - Winter Collections 2030</h2>
                                 <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
                                 commitment to exceptional quality.</p>
-                                <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                                <a href="/shop" class="primary-btn">Shop now <span class="arrow_right"></span></a>
                                 <div class="hero__social">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
                                     <a href="#"><i class="fa fa-twitter"></i></a>
@@ -36,7 +36,7 @@
                                 <h2>Fall - Winter Collections 2030</h2>
                                 <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
                                 commitment to exceptional quality.</p>
-                                <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                                <a href="/shop" class="primary-btn">Shop now <span class="arrow_right"></span></a>
                                 <div class="hero__social">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
                                     <a href="#"><i class="fa fa-twitter"></i></a>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="banner__item__text">
                             <h2>Clothing Collections 2030</h2>
-                            <a href="#">Shop now</a>
+                            <a href="/shop">Shop now</a>
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                         </div>
                         <div class="banner__item__text">
                             <h2>Accessories</h2>
-                            <a href="#">Shop now</a>
+                            <a href="/shop">Shop now</a>
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                         </div>
                         <div class="banner__item__text">
                             <h2>Shoes Spring 2030</h2>
-                            <a href="#">Shop now</a>
+                            <a href="/shop">Shop now</a>
                         </div>
                     </div>
                 </div>
@@ -107,42 +107,54 @@
                 </div>
             </div>
             <div class="row product__filter">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-1.jpg">
-                            <span class="label">New</span>
-                            <ul class="product__hover">
-                                <li><a href="#"><img src="" src="{{ asset('menfashionexternal/img/icon/heart.png')}}" alt=""></a></li>
-                                <li><a href="#"><img src="{{ asset('menfashionexternal/img/icon/compare.png')}}" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="{{ asset('menfashionexternal/img/icon/search.png')}}" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Piqué Biker Jacket</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
+                @forelse ($products as $product )
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix {{ $product->deal_status }}">
+                        <div class="product__item">
+                            {{-- <div class="product__item__pic set-bg" data-setbg="{{ asset('menfashionexternal/img/product/product-1.jpg')}}"> --}}
+                            <div class="product__item__pic set-bg"  data-setbg="{{ $product->image }}">
+                                <span class="label">New</span>
+                                <ul class="product__hover">
+                                    <li><a href="#"><img src="{{ asset('menfashionexternal/img/icon/heart.png')}}" alt=""></a></li>
+                                    <li><a href="#"><img src="{{ asset('menfashionexternal/img/icon/compare.png')}}" alt=""> <span>Compare</span></a></li>
+                                    <li><a href="#"><img src="{{ asset('menfashionexternal/img/icon/search.png')}}" alt=""></a></li>
+                                </ul>
                             </div>
-                            <h5>$67.24</h5>
-                            <div class="product__color__select">
-                                <label for="pc-1">
-                                    <input type="radio" id="pc-1">
-                                </label>
-                                <label class="active black" for="pc-2">
-                                    <input type="radio" id="pc-2">
-                                </label>
-                                <label class="grey" for="pc-3">
-                                    <input type="radio" id="pc-3">
-                                </label>
+                            <div class="product__item__text">
+                                <h6> {{$product->name }} </h6>
+                                <a href="{{route('product.detail', $product->id )}}" class="add-cart">+ Add To Cart </a>
+                                <div class="rating">
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                                <h5> $ {{ $product->price }} </h5>
+                                <div class="product__color__select">
+                                    <label for="pc-1">
+                                        <input type="radio" id="pc-1">
+                                    </label>
+                                    <label class="active black" for="pc-2">
+                                        <input type="radio" id="pc-2">
+                                    </label>
+                                    <label class="grey" for="pc-3">
+                                        <input type="radio" id="pc-3">
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
+                @empty
+                    <div class="container">
+                        <h6>
+                            No Product uploaded
+                        </h6>
+                    </div>
+                @endforelse
+                
+
+
+                {{-- <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="{{ asset('menfashionexternal/img/product/product-2.jpg')}}">
                             <ul class="product__hover">
@@ -381,7 +393,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>
@@ -427,7 +439,7 @@
                                 <p>Seconds</p>
                             </div>
                         </div>
-                        <a href="#" class="primary-btn">Shop now</a>
+                        <a href="/shop" class="primary-btn">Shop now</a>
                     </div>
                 </div>
             </div>

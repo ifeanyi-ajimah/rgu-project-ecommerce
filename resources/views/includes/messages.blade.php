@@ -1,21 +1,20 @@
 
 @if (session('status'))
-<div class="alert alert-success alert-dismissable">
+<div class="alert alert-success alert-dismissable" role="alert">
 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 <strong>{{ session('status') }}</strong>
 </div>
 @endif
 
-@if (session('nooffer'))
-<div class="alert alert-danger alert-dismissable">
+@if (session('errordata'))
+<div class="alert alert-danger alert-dismissable" role="alert">
 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-<strong>{{ session('nooffer') }}</strong>
+<strong>{{ session('errordata') }}</strong>
 </div>
 @endif
 
 @if($errors->any())
-<div class="">
-    <div class=" alert alert-danger alert-dismissable">
+    <div class=" alert alert-danger alert-dismissable" role="alert">
 
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <ul>
@@ -24,11 +23,11 @@
             @endforeach
         </ul>
     </div>
-</div>
+
 @endif
 
 @if (session('error_note'))
-<div class="alert alert-danger alert-dismissable">
+<div class="alert alert-danger alert-dismissable" role="alert">
 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 <strong>{{ session('error_note') }}</strong>
 </div>

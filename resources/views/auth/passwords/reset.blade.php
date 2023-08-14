@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>NOVUS AGRO | Forgot password</title>
+    <title>Male Fashion | Forgot password</title>
 
     <link href="{{ asset('inspinia/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ asset('inspinia/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
@@ -77,10 +77,10 @@
         <hr/>
         <div class="row">
             <div class="col-md-6">
-                Copyright NovusAgro
+                Mens Fashion
             </div>
             <div class="col-md-6 text-right">
-               <small>© 2021</small>
+               <small>© 2023</small>
             </div>
         </div>
     </div>

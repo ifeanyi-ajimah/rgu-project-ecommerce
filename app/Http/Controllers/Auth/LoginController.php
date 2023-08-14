@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OTPMail;
 use App\Providers\RouteServiceProvider;
+use App\Utils\AdminType;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 
 class LoginController extends Controller
 {
@@ -30,46 +35,6 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    public function showLoginForm()
-    {
-        return view('auth.mylogin');
-    }
-
-    
-    public function authenticate(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
- 
-        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password'], 'type' => 'admin'])) {
-            $request->session()->regenerate();
- 
-            return redirect()->intended('home');
-        }
- 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
-    }
-
-    // protected function authenticated(Request $request, $user)
-    // {
-    //     if ( $user->type != 'admin') {
-    //         $this->logout($request);
-
-    //         return redirect()->back()
-    //             ->withInput($request->only($this->username(), 'remember'))
-    //             ->withErrors([
-    //                 $this->username() => 'You have no business here.'
-    //             ]);
-    //     } else {
-    //         return redirect()->intended($this->redirectPath());
-    //     }
-
-    // }
-
     /**
      * Create a new controller instance.
      *
@@ -77,6 +42,62 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except(['logout','resendOtp']);
     }
+
+    public function showLoginForm()
+    {
+        return view('external.login');
+    }
+
+    protected function attemptLogin(Request $request)
+    {
+        
+        $result = $this->guard()->attempt(
+            $this->credentials($request), $request->boolean('remember')
+        );
+
+        if (Auth::check()) {
+        if(Auth::user()->type != AdminType::ADMIN ){
+            Auth::logout();
+            return redirect('/login')->with('errordata', 'No business there, sign in here !');
+        }
+        }
+        if($result){
+            // $OTP = rand(100000, 999999);
+            // Cache::put(['OTP' => $OTP], now()->addMinute(1) );
+            // Mail::to($request->email)->send(new OTPMail($OTP));
+            // dd($request->otp_via);
+            auth()->user()->sendOTP($request->otp_via);
+
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        auth()->user()->update(['is_otp_verified' => 0]);
+
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        if ($response = $this->loggedOut($request)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect('/admin');
+    }
+
+    public function resendOtp()
+    {
+        auth()->user()->sendOTP('email_otp');
+        return back()->with('status', 'New OTP sent. Kindly check your email !');
+        return back();
+    }
+
+    
 }

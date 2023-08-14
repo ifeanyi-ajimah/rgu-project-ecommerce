@@ -6,9 +6,9 @@
 
 <body>
     <!-- Page Preloder -->
-    <div id="preloder">
+    {{-- <div id="preloder">
         <div class="loader"></div>
-    </div>
+    </div> --}}
 
     <!-- Offcanvas Menu Begin -->
     <div class="offcanvas-menu-overlay"></div>
@@ -18,11 +18,11 @@
 
     <!-- Header Section Begin -->
     <header class="header">
-        @include('externalLayout.desktopoverlay')
+       @include('externalLayout.desktopoverlay')
        @include('externalLayout.nav')
     </header>
     <!-- Header Section End -->
-
+   @include('includes.messages')
     @if (! \Request::is('/'))
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-option">
@@ -60,6 +60,9 @@
 
     
 @include('externalLayout.scripts')
+
+@yield('scripts')
+
 </body>
 
 </html>

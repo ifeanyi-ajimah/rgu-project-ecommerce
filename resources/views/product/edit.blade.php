@@ -31,11 +31,24 @@ Edit Product
                                     <form action="{{ route('product.update', $product->id )}}" method="POST" enctype="multipart/form-data" >
                                         @csrf
                                         {{method_field('PUT')}} 
+                                    <div class="form-group row"><label class="col-sm-2 col-form-label"> Category :</label>
+                                        <div class="col-sm-10">
+                                            <select id="inputState" @error('category_id') is-invalid @enderror name="category_id" required  class="form-control">
+                                                <option value=""> Select Category </option>
+                                                @foreach ($data['categories'] as $category)
+                                                    <option @if($product->category_id == $category->id ) selected @endif value={{$category->id}}> {{$category->name }} </option>
+                                                @endforeach
+                                                </select>
+                                                @error('category_id')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
+                                        </div>
+                                    </div>
                                     <div class="form-group row"><label class="col-sm-2 col-form-label">Name:</label>
                                         <div class="col-sm-10"><input type="text" name="name" required value="{{ $product->name }}" @error('name') is-invalid @enderror class="form-control" placeholder="Product name"></div>
                                     </div>
                                     <div class="form-group row"><label class="col-sm-2 col-form-label">Price:</label>
-                                        <div class="col-sm-10"><input type="number" step="any" name="price" required value="{{ $product->price }}" @error('price') is-invalid @enderror class="form-control" placeholder="₦ Price"></div>
+                                        <div class="col-sm-10"><input type="number" step="any" name="price" required value="{{ $product->price }}" @error('price') is-invalid @enderror class="form-control" placeholder="$ Price"></div>
                                     </div>
                                     <div class="form-group row"><label class="col-sm-2 col-form-label">Description:</label>
                                         <div class="col-sm-10">
@@ -47,6 +60,58 @@ Edit Product
                                     </div>
                                     <div class="form-group row"><label class="col-sm-2 col-form-label"> Weight Per Unit(kg) </label>
                                         <div class="col-sm-10"><input type="number" step="any" name="weight"  value="{{ $product->weight }}" @error('weight') is-invalid @enderror class="form-control" required placeholder="enter weight"></div>
+                                    </div>
+                                    <div class="form-group row"><label class="col-sm-2 col-form-label"> Brand :</label>
+                                        <div class="col-sm-10">
+                                            <select id="inputState" @error('brand_id') is-invalid @enderror name="brand_id" required class="form-control">
+                                                <option value=""> Select Brand </option>
+                                                @foreach ($data['brands'] as $brand)
+                                                   <option @if($product->brand_id == $brand->id ) selected @endif value={{$brand->id}}> {{$brand->name }} </option>
+                                                @endforeach
+                                              </select>
+                                              @error('brand_id')
+                                              <div class="alert alert-danger">{{ $message }}</div>
+                                              @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group row"><label class="col-sm-2 col-form-label"> Color:</label>
+                                        <div class="col-sm-10">
+                                            <select id="inputState" @error('color') is-invalid @enderror name="color" required class="form-control">
+                                                <option value=""> Select Color </option>
+                                                @foreach ( $data['colors'] as $color)
+                                                <option @if($product->color == $color['name'] ) selected @endif value={{$color['name'] }}> {{$color['name'] }} </option>
+                                                @endforeach
+                                              </select>
+                                              @error('color')
+                                              <div class="alert alert-danger">{{ $message }}</div>
+                                              @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group row"><label class="col-sm-2 col-form-label"> Size:</label>
+                                        <div class="col-sm-10">
+                                            <select id="size" @error('size') is-invalid @enderror name="size" required class="form-control">
+                                                <option value=""> Size </option>
+                                                @foreach ($data['sizes'] as $size)
+                                                <option @if($product->size == $size ) selected @endif value={{$size}}> {{$size }} </option>
+                                                @endforeach
+                                              </select>
+                                              @error('size')
+                                              <div class="alert alert-danger">{{ $message }}</div>
+                                              @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group row"><label class="col-sm-2 col-form-label"> Deal Status:</label>
+                                        <div class="col-sm-10">
+                                            <select id="deal_status" @error('deal_status') is-invalid @enderror name="deal_status" required class="form-control">
+                                                <option value=""> Deal Status </option>
+                                                @foreach ($data['deal_statuses'] as $deal_status)
+                                                <option @if($product->deal_status == $deal_status ) selected @endif value={{$deal_status}}> {{$deal_status }} </option>
+                                                @endforeach
+                                              </select>
+                                              @error('deal_status')
+                                              <div class="alert alert-danger">{{ $message }}</div>
+                                              @enderror
+                                        </div>
                                     </div>
                                     <div class="form-group row"><label class="col-sm-2 col-form-label">Placeholder Image:</label>
                                         <div class="col-sm-10"><input type="file" accept="image/*" name="image" @error('image') is-invalid @enderror class="form-control"  placeholder="Sheets containing Lorem"></div>

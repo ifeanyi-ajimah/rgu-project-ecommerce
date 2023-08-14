@@ -23,7 +23,6 @@ Show Product
                 <div class="row">
                     <div class="col-md-5">
 
-
                         <div class="product-images">
                             <div>
                                 <div class="image-imitation">
@@ -37,10 +36,6 @@ Show Product
                                     </div>
                                 </div>
                             @endforeach
-                            
-                            
-
-
                         </div>
 
                     </div>
@@ -51,12 +46,11 @@ Show Product
                         </h2>
                         {{-- <small>Many desktop publishing packages and web page editors now.</small> --}}
                         <div class="m-t-md">
-                            <h2 class="product-main-price">₦  {{ number_format($product->price)}} <small class="text-muted"> </small> </h2>
+                            <h2 class="product-main-price"> $ {{ number_format($product->price)}} <small class="text-muted"> </small> </h2>
                         </div>
                         <hr>
 
                         <h4>Product description</h4>
-
                         <div class="small text-muted">
                             {{ $product->description }}
                             <br/>
@@ -64,11 +58,24 @@ Show Product
                             
                         </div>
                         <dl class="small m-t-md">
+                            <dt> Category </dt>
+                            <dd> <span class="badge badge-success"> {{$product->category->name }} </span>  </dd>
                             <dt> Amount in stock </dt>
                             <dd> {{ number_format($product->amount_in_stock) }}</dd>
                             <dt>Availabiliy</dt>
-                            <dd> {{$product->is_available ? "Available" : "Not Available." }}</dd>
-                            {{-- <dd>Donec id elit non mi porta gravida at eget metus.</dd> --}}
+                            @if ($product->is_available == 1)
+                               <dd>  <span class="badge badge-primary"> Available</span> </dd>
+                            @else
+                                <dd> <span class="badge badge-warning"> Not Available</span> </dd>
+                            @endif
+                            <dt> Price </dt>
+                            <dd> {{$product->price }} </dd>
+                            <dt> Weight </dt>
+                            <dd> {{$product->weight }} </dd>
+                            <dt> Size </dt>
+                            <dd> {{$product->size }} </dd>
+                            <dt> Color </dt>
+                            <dd> {{$product->color }} </dd>
                             <dt> Uploaded By</dt>
                             <dd> {{$product->user->name}} </dd>
                         </dl>

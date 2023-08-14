@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -17,6 +18,8 @@ class RoleController extends Controller
      */
     public function index()
     {
+        $this->authorize('view-roles-and-permissions', Auth::user() );
+
         $roles = Role::all();
         $permissions = Permission::all();
         return view('roles.index', compact('roles', 'permissions'));
@@ -40,6 +43,8 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('manage-roles-and-permissions', Auth::user() );
+
         $this->validate($request, [
             'name' => 'required|string|max:80|unique:roles',
             'description' => 'nullable|string',
@@ -87,6 +92,8 @@ class RoleController extends Controller
      */
     public function update(Request $request,  $id)
     {
+        $this->authorize('manage-roles-and-permissions', Auth::user() );
+
         $this->validate($request, [
             'name' => 'required|string|max:80|unique:roles,name,'.$id,
             'description' => 'nullable|string',

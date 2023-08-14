@@ -26,8 +26,15 @@ class UserFactory extends Factory
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
+            'is_otp_verified' => 0,
+            'phone' => '09049949494',
+            'type' => 'admin',
+            'role_id' => 1,
+            'is_active' => 1,
+            'verification_token' => 1,
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ];
     }
 }
+

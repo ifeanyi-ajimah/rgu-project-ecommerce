@@ -29,7 +29,20 @@ Create Products
                                 {{-- @include('includes.messages') --}}
                                 <fieldset>
                                     <form action="{{ route('product.store')}}" method="POST" enctype="multipart/form-data" >
-                                        @csrf
+                                        @csrf 
+                                    <div class="form-group row"><label class="col-sm-2 col-form-label"> Category :</label>
+                                        <div class="col-sm-10">
+                                            <select id="inputState" @error('category_id') is-invalid @enderror name="category_id" required  class="form-control">
+                                                <option value=""> Select Category </option>
+                                                @foreach ($data['categories'] as $category)
+                                                    <option value={{$category->id}}> {{$category->name }} </option>
+                                                @endforeach
+                                                </select>
+                                                @error('category_id')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
+                                        </div>
+                                    </div>
                                     <div class="form-group row"><label class="col-sm-2 col-form-label">Name:</label>
                                         <div class="col-sm-10">
                                             <input type="text" name="name" required value="{{ old('name')}}" @error('name') is-invalid @enderror class="form-control" placeholder="Product name">
@@ -40,7 +53,7 @@ Create Products
                                     </div>
                                     <div class="form-group row"><label class="col-sm-2 col-form-label">Price:</label>
                                         <div class="col-sm-10">
-                                            <input type="number" step="any" name="price" required value="{{ old('price')}}" @error('price') is-invalid @enderror class="form-control" placeholder="₦ Price">
+                                            <input type="number" step="any" name="price" required value="{{ old('price')}}" @error('price') is-invalid @enderror class="form-control" placeholder="$ Price">
                                               @error('price')
                                               <div class="alert alert-danger">{{ $message }}</div>
                                              @enderror
@@ -68,6 +81,58 @@ Create Products
                                              @error('weight')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                              @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group row"><label class="col-sm-2 col-form-label"> Brand :</label>
+                                        <div class="col-sm-10">
+                                            <select id="inputState" @error('brand_id') is-invalid @enderror name="brand_id" required class="form-control">
+                                                <option value=""> Select Brand </option>
+                                                @foreach ($data['brands'] as $brand)
+                                                   <option value={{$brand->id}}> {{$brand->name }} </option>
+                                                @endforeach
+                                              </select>
+                                              @error('brand_id')
+                                              <div class="alert alert-danger">{{ $message }}</div>
+                                              @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group row"><label class="col-sm-2 col-form-label"> Color:</label>
+                                        <div class="col-sm-10">
+                                            <select id="inputState" @error('color') is-invalid @enderror name="color" required class="form-control">
+                                                <option value=""> Select Color </option>
+                                                @foreach ( $data['colors'] as $color)
+                                                <option value={{$color['name'] }}> {{$color['name'] }} </option>
+                                                @endforeach
+                                              </select>
+                                              @error('color')
+                                              <div class="alert alert-danger">{{ $message }}</div>
+                                              @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group row"><label class="col-sm-2 col-form-label"> Size:</label>
+                                        <div class="col-sm-10">
+                                            <select id="size" @error('size') is-invalid @enderror name="size" required class="form-control">
+                                                <option value=""> Size </option>
+                                                @foreach ($data['sizes'] as $size)
+                                                <option value={{$size}}> {{$size }} </option>
+                                                @endforeach
+                                              </select>
+                                              @error('size')
+                                              <div class="alert alert-danger">{{ $message }}</div>
+                                              @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group row"><label class="col-sm-2 col-form-label"> Deal Status :</label>
+                                        <div class="col-sm-10">
+                                            <select id="deal_status" @error('deal_status') is-invalid @enderror name="deal_status" required class="form-control">
+                                                <option value=""> Deal_status </option>
+                                                @foreach ($data['deal_statuses'] as $deal_status)
+                                                <option value={{$deal_status}}> {{$deal_status }} </option>
+                                                @endforeach
+                                              </select>
+                                              @error('deal_status')
+                                              <div class="alert alert-danger">{{ $message }}</div>
+                                              @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row"><label class="col-sm-2 col-form-label">Placeholder Image:</label>

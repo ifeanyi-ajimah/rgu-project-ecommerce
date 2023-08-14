@@ -16,7 +16,9 @@ Admin
 @section('content')
 
 <div class="wrapper wrapper-content animated fadeInRight">
-  @include('includes.messages')
+  
+  {{-- @include('includes.messages') --}}
+
     <div class="row">
         <div class="col-lg-12">
         <div class="ibox ">
@@ -44,7 +46,7 @@ Admin
             </tr>
             </thead>
             <tbody>
-            @foreach ($users as $user)
+            @foreach ($data['users'] as $user)
             <tr class="grade">
                 <td> {{$user->name}}</td>
                 <td>
@@ -142,7 +144,7 @@ Admin
                         <div class="form-group">
                           <label for="role"> Select Role </label>
                           <div class="col-md-12">
-                            @foreach ($roles as $role)
+                            @foreach ($data['roles'] as $role)
                               <div class="form-check form-check-inline">
                               <input class="form-check-input @error('role_id') is-invalid @enderror " required id="gridRadios1{{$role->id}}" type="radio" name="role_id" value="{{ $role->id }}"
                               @if (isset($user->role))
@@ -252,7 +254,7 @@ Admin
           <div class="form-group">
             <label for="role"> Select Role </label>
             <div class="col-md-12">
-              @foreach ($roles as $role)
+              @foreach ($data['roles'] as $role)
                 <div class="form-check form-check-inline">
                 <input class="form-check-input @error('role_id') is-invalid @enderror " required id="gridRadios1{{$role->id}}" type="radio" name="role_id" value="{{ $role->id }}" />
                   <label class="form-check-label ml-3" for="gridRadios1"> {{ $role->name}} </label>

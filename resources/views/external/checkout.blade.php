@@ -98,21 +98,23 @@
                             <h4 class="order__title">Your order</h4>
                             <div class="checkout__order__products">Product <span>Total</span></div>
                             <ul class="checkout__total__products">
-                                <li>01. Vanilla salted caramel <span>$ 300.0</span></li>
-                                <li>02. German chocolate <span>$ 170.0</span></li>
-                                <li>03. Sweet autumn <span>$ 170.0</span></li>
-                                <li>04. Cluten free mini dozen <span>$ 110.0</span></li>
+                                @forelse ($data['carts'] as $item)
+                                <li> {{$item->product->name }} <span>$ {{ $item->total_price }} </span> </li>
+                                @empty
+                                <li> xxx <span>$ 0.0 </span> </li>
+                                @endforelse
+                                
                             </ul>
                             <ul class="checkout__total__all">
-                                <li>Subtotal <span>$750.99</span></li>
-                                <li>Total <span>$750.99</span></li>
+                                <li>Subtotal <span>$ {{ getCartSum() }} </span></li>
+                                <li>Total <span>$ {{ getCartSum() }} </span></li>
                             </ul>
                             <div class="checkout__input__checkbox">
-                                <label for="acc-or">
+                                {{-- <label for="acc-or">
                                     Create an account?
                                     <input type="checkbox" id="acc-or">
                                     <span class="checkmark"></span>
-                                </label>
+                                </label> --}}
                             </div>
                             <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
                             ut labore et dolore magna aliqua.</p>

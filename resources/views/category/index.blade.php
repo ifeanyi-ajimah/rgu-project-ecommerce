@@ -43,7 +43,7 @@ Category
                 <td> {{$category->name}}</td>
                 <td>{{$category->description}}</td>
              
-                <td> <button class="btn btn-success"> <a href="#"> <i class="fa fa-eye text-white"></i> </a> </button> | <button class="btn btn-primary" data-toggle="modal" data-target="#editModal{{$category->id}}"> <a href="#"> <i class="fa fa-edit text-white"></i></a> </button> | <button data-id="{{$category->id}}" class="btn btn-danger delete-category"> <a href="#"> <i class="fa fa-trash text-white"></i></a> </button> </td>
+                <td> <button class="btn btn-primary" data-toggle="modal" data-target="#editModal{{$category->id}}"> <a href="#"> <i class="fa fa-edit text-white"></i></a> </button> | <button data-id="{{$category->id}}" class="btn btn-danger delete-category"> <a href="#"> <i class="fa fa-trash text-white"></i></a> </button> </td>
             </tr>
 
             <div class="modal fade" id="editModal{{$category->id}}" tabindex="-1" category="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -61,11 +61,12 @@ Category
                         {{method_field('PUT')}} 
                         <div class="form-group">
                           <label for="name"> Name </label>
+                          <input type="hidden" name="id" value="{{ $category->id }}">
                           <input type="text" class="form-control" required name="name" value="{{$category->name}}" id="name" aria-describedby="emailHelp" placeholder="Enter a unique name ">
                         </div>
                         <div class="form-group">
-                          <label for="description">Description</label>
-                          <input type="text" class="form-control" required name="description" value="{{$category->description}}" id="description" placeholder="enter description ">
+                          <label for="description">Description (optional) </label>
+                          <input type="text" class="form-control"  name="description" value="{{$category->description}}" id="description" placeholder="enter description ">
                         </div>
 
                     </div>
@@ -117,8 +118,8 @@ Category
             <input type="text" class="form-control" value="{{old('name')}}" required name="name" id="name" aria-describedby="emailHelp" placeholder="Enter a unique category name ">
           </div>
           <div class="form-group">
-            <label for="description">Description</label>
-            <input type="text" class="form-control" name="description" value="{{old('description')}}" required id="description" placeholder="enter description ">
+            <label for="description">Description (optional) </label>
+            <input type="text" class="form-control" name="description" value="{{old('description')}}"  id="description" placeholder="enter description ">
           </div>
       </div>
       <div class="modal-footer">

@@ -19,13 +19,17 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categorys');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->boolean('status')->default(true);
             $table->string('image')->nullable();
             $table->decimal('price', 10, 2);
             $table->float('weight', 10, 2)->nullable();
             $table->integer('amount_in_stock');
             $table->boolean('is_available');
+            $table->string('size')->nullable();
+            $table->string('color')->nullable();
+            $table->string('deal_status')->nullable();
+            $table->foreignId('brand_id')->constrained('brands')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

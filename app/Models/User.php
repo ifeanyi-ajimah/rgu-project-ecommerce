@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use App\Mail\OTPMail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 
 class User extends Authenticatable
 {
@@ -17,7 +21,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone', 'password', 'role_id', 'type', 'is_active', 'verification_token'
+        'name', 'email', 'phone', 'password', 'role_id', 'type', 'is_active', 
+        'is_otp_verified','verification_token'
     ];
 
 
@@ -39,4 +44,34 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function cacheTheOTP()
+    {
+        $OTP = rand(100000,999999);
+        Cache::put([$this->OTPKey() => $OTP], now()->addSeconds(200));
+        return $OTP;
+    }
+
+    public function OTPKey()
+    {
+        return "OTP_for_{$this->id}";
+    }
+
+    public function sendOTP($via)
+    {
+        $this->cacheTheOTP();
+        if($via == 'sms_otp'){
+
+        }else{
+            Mail::to($this->email)->send(new OTPMail($this->cacheTheOTP() ));
+        }
+    }
+
+    public function OTP()
+    {
+        return Cache::get($this->OTPKey() );
+    }
+    
+
+    
 }
