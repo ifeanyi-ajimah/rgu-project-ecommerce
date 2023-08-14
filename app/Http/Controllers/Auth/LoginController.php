@@ -57,11 +57,12 @@ class LoginController extends Controller
             $this->credentials($request), $request->boolean('remember')
         );
 
+        if (Auth::check()) {
         if(Auth::user()->type != AdminType::ADMIN ){
             Auth::logout();
             return redirect('/login')->with('errordata', 'No business there, sign in here !');
         }
-
+        }
         if($result){
             // $OTP = rand(100000, 999999);
             // Cache::put(['OTP' => $OTP], now()->addMinute(1) );

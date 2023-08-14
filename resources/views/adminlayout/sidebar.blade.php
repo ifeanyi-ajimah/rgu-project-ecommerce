@@ -12,7 +12,6 @@
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         {{-- <li><a class="dropdown-item" href="#">Profile</a></li> --}}
-                    
                         <li class="dropdown-divider"></li>
                     </ul>
                 </div>

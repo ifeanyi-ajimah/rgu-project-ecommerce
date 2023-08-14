@@ -31,13 +31,14 @@ class CustomerLoginController extends Controller
  
         if (Auth::attempt($credentials)) {
                 
+            if (Auth::check()) {
             if(Auth::user()->type != AdminType::CUSTOMER ){
                 Auth::logout();
                 return redirect('/admin')->with('errordata', 'No business here, sign in here !');
             }
+            }
             $request->session()->regenerate();
             return redirect('/shop');
-            // return redirect()->intended('checkout');
         }
  
         return back()->withErrors([
